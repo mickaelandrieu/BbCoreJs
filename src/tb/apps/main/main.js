@@ -29,7 +29,7 @@ require.config({
     }
 });
 
-define('app.main', ['tb.core', 'main.view.index', 'jquery', 'component!popin', 'datetimepicker'], function (Core, MainViewIndex, jQuery, Popin) {
+define('app.main', ['tb.core', 'main.view.index', 'jquery', 'component!popin', 'content.domparser'], function (Core, MainViewIndex, jQuery, Popin, DOMParser) {
     'use strict';
 
     /**
@@ -52,31 +52,17 @@ define('app.main', ['tb.core', 'main.view.index', 'jquery', 'component!popin', '
             Core.set('application.main', this);
 
             Popin.init(this.config.tbSelector);
-
-            console.log(' MainApplication is initialized ');
         },
 
         /**
          * occurs on start of main application
          */
         onStart: function () {
+
+            DOMParser.parse();
+
             var view = new MainViewIndex(this.config);
             view.render();
-            console.log(' MainApplication onStart...');
-        },
-
-        /**
-         * occurs on stop of main application
-         */
-        onStop: function () {
-            console.log(' MainApplication onStop...');
-        },
-
-        /**
-         * occurs on error of main application
-         */
-        onError: function () {
-            console.log(' MainApplication onError...');
         }
     });
 });

@@ -30,3 +30,14 @@
 #bb5-ui .bb5-context-menu {
     z-index: 1000;
 }
+
+/* CONTENT */
+
+.bb5-content {position:relative; min-height:21px;} /*min-height*/
+
+.bb5-content.bb5-content-hover {-webkit-box-shadow:0px 0px 1px 3px rgba(0,0,0,0.2); box-shadow:0px 0px 1px 3px rgba(0,0,0,0.2);}
+
+.bb5-content.bb5-content-selected {-webkit-box-shadow:0px 0px 1px 3px rgba(227,78,38,0.85); box-shadow:0px 0px 1px 3px rgba(227,78,38,0.85);} /*clicked block -> orange*/
+
+
+/* END CONTENT */
