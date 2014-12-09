@@ -32,7 +32,6 @@
 }
 
 /* CONTENT */
-
 .bb-content {
     position:relative;
     min-height:21px;
@@ -56,6 +55,5 @@
 .bb-content.bb-content-hover {-webkit-box-shadow:0px 0px 1px 3px rgba(0,0,0,0.2); box-shadow:0px 0px 1px 3px rgba(0,0,0,0.2);}
 
 .bb-content.bb-content-selected {-webkit-box-shadow:0px 0px 1px 3px rgba(227,78,38,0.85); box-shadow:0px 0px 1px 3px rgba(227,78,38,0.85);} /*clicked block -> orange*/
-
 
 /* END CONTENT */
