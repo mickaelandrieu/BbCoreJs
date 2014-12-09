@@ -32,28 +32,12 @@
 }
 
 /* CONTENT */
-.bb-content {
-    position:relative;
-    min-height:21px;
-    padding-bottom: 15px;
-    padding-top: 15px;
-    margin-bottom: 15px;
-    margin-top: 15px;
-    cursor: move;
-} /*min-height*/
 
-.bb-dropzone {
-    width: 100%;
-    min-height: 50px;
-    background-color:green;
-}
+.bb5-content {position:relative; min-height:21px;} /*min-height*/
 
-#bb5-site-wrapper {
-    margin-top: 190px;
-}
+.bb5-content.bb5-content-hover {-webkit-box-shadow:0px 0px 1px 3px rgba(0,0,0,0.2); box-shadow:0px 0px 1px 3px rgba(0,0,0,0.2);}
 
-.bb-content.bb-content-hover {-webkit-box-shadow:0px 0px 1px 3px rgba(0,0,0,0.2); box-shadow:0px 0px 1px 3px rgba(0,0,0,0.2);}
+.bb5-content.bb5-content-selected {-webkit-box-shadow:0px 0px 1px 3px rgba(227,78,38,0.85); box-shadow:0px 0px 1px 3px rgba(227,78,38,0.85);} /*clicked block -> orange*/
 
-.bb-content.bb-content-selected {-webkit-box-shadow:0px 0px 1px 3px rgba(227,78,38,0.85); box-shadow:0px 0px 1px 3px rgba(227,78,38,0.85);} /*clicked block -> orange*/
 
 /* END CONTENT */

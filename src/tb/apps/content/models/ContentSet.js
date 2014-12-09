@@ -17,14 +17,21 @@
  * along with BackBuilder5. If not, see <http://www.gnu.org/licenses/>.
  */
 
+<<<<<<< HEAD
 define(['content.models.AbstractContent', 'jquery', 'jsclass'], function (AbstractContent, jQuery) {
+=======
+define(['content.models.AbstractContent', 'jsclass'], function (AbstractContent) {
+>>>>>>> #3783 start DOMParser for content
 
     'use strict';
 
     var ContentSet = new JS.Class(AbstractContent, {
 
+<<<<<<< HEAD
         contentClass: 'bb-content',
 
+=======
+>>>>>>> #3783 start DOMParser for content
         /**
          * Initialize Content
          *
@@ -33,6 +40,7 @@ define(['content.models.AbstractContent', 'jquery', 'jsclass'], function (Abstra
         initialize: function (config) {
             config.optionsConfig = this.defaultOptionsConfig;
 
+<<<<<<< HEAD
             this.isContentSet = true;
 
             this.callSuper(config);
@@ -79,6 +87,52 @@ define(['content.models.AbstractContent', 'jquery', 'jsclass'], function (Abstra
 
             return result;
         }
+=======
+            this.callSuper(config);
+        },
+
+        /**
+         * Default options config
+         */
+        defaultOptionsConfig: [
+            {
+                icoClass: 'bb5-ico-add',
+                title: 'Add a new item to this container',
+                dataType: 'bb5-ico-add',
+                label: 'Add',
+                callbackClick: function () {
+                    console.log('click add');
+                }
+            },
+            {
+                icoClass: 'bb5-ico-info',
+                title: 'Informations',
+                dataType: 'bb5-ico-info',
+                label: 'Informations',
+                callbackClick: function () {
+                    console.log('click Informations');
+                }
+            },
+            {
+                icoClass: 'bb5-ico-parameter',
+                title: 'Parameters',
+                dataType: 'bb5-ico-parameter',
+                label: 'Parameters',
+                callbackClick: function () {
+                    console.log('click Parameters');
+                }
+            },
+            {
+                icoClass: 'bb5-ico-lib',
+                title: 'Content selector',
+                dataType: 'bb5-ico-lib',
+                label: 'Content selector',
+                callbackClick: function () {
+                    console.log('click Content selector');
+                }
+            }
+        ]
+>>>>>>> #3783 start DOMParser for content
     });
 
     return ContentSet;
