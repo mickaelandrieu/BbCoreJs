@@ -32,49 +32,7 @@ define(['content.models.AbstractContent', 'jsclass'], function (AbstractContent)
             config.optionsConfig = this.defaultOptionsConfig;
 
             this.callSuper(config);
-        },
-
-        /**
-         * Default options config
-         */
-        defaultOptionsConfig: [
-            {
-                icoClass: 'bb5-ico-add',
-                title: 'Add a new item to this container',
-                dataType: 'bb5-ico-add',
-                label: 'Add',
-                callbackClick: function () {
-                    console.log('click add');
-                }
-            },
-            {
-                icoClass: 'bb5-ico-info',
-                title: 'Informations',
-                dataType: 'bb5-ico-info',
-                label: 'Informations',
-                callbackClick: function () {
-                    console.log('click Informations');
-                }
-            },
-            {
-                icoClass: 'bb5-ico-parameter',
-                title: 'Parameters',
-                dataType: 'bb5-ico-parameter',
-                label: 'Parameters',
-                callbackClick: function () {
-                    console.log('click Parameters');
-                }
-            },
-            {
-                icoClass: 'bb5-ico-lib',
-                title: 'Content selector',
-                dataType: 'bb5-ico-lib',
-                label: 'Content selector',
-                callbackClick: function () {
-                    console.log('click Content selector');
-                }
-            }
-        ]
+        }
     });
 
     return ContentSet;

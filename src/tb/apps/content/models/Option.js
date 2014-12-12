@@ -17,7 +17,7 @@
  * along with BackBuilder5. If not, see <http://www.gnu.org/licenses/>.
  */
 
-define(['text!content/tpl/button', 'tb.core.ViewManager', 'jsclass'], function (template, ViewManager) {
+define(['text!content/tpl/button', 'tb.core.Renderer', 'jsclass'], function (template, Renderer) {
     'use strict';
 
     var Option = new JS.Class({
@@ -43,7 +43,7 @@ define(['text!content/tpl/button', 'tb.core.ViewManager', 'jsclass'], function (
          * @returns {String}
          */
         render: function () {
-            return ViewManager.render(template, this.config);
+            return Renderer.render(template, this.config);
         }
     });
 
