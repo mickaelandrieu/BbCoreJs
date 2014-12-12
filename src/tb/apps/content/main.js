@@ -19,19 +19,32 @@
 
 require.config({
     paths: {
+
+        //Controllers
+        'content.main.controller': 'src/tb/apps/content/controllers/main.controller',
+
+        //Routing
         'content.routes': 'src/tb/apps/content/routes',
 
+        //Repositories
+        'content.repository': 'src/tb/apps/content/repository/content.repository',
+
         //Components
-        'content.domparser': 'src/tb/apps/content/components/DOMParser',
+        'content.manager': 'src/tb/apps/content/components/ContentManager',
+        'definition.manager': 'src/tb/apps/content/components/DefinitionManager',
+        'content.container': 'src/tb/apps/content/components/ContentContainer',
+        'content.breadcrumb': 'src/tb/apps/content/components/Breadcrumb',
 
         //Models
         'content.models.AbstractContent': 'src/tb/apps/content/models/AbstractContent',
         'content.models.Content': 'src/tb/apps/content/models/Content',
+        'content.models.ContentSet': 'src/tb/apps/content/models/ContentSet',
         'content.models.Option': 'src/tb/apps/content/models/Option',
 
         //Templates
         'content/tpl/options_container': 'src/tb/apps/content/templates/options-container.twig',
-        'content/tpl/button': 'src/tb/apps/content/templates/button.twig'
+        'content/tpl/button': 'src/tb/apps/content/templates/button.twig',
+        'content/tpl/content_breadcrumb': 'src/tb/apps/content/templates/content-breadcrumb.twig'
     }
 });
 
