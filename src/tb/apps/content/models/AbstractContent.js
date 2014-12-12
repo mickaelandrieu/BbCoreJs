@@ -20,19 +20,21 @@
 define(
     [
         'tb.core',
-        'tb.core.ViewManager',
+        'tb.core.Renderer',
         'content.models.Option',
         'jquery',
         'text!content/tpl/options_container',
         'jsclass'
     ],
-    function (Core, ViewManager, Option, jQuery, optionsContainerTpl) {
+    function (Core, Renderer, Option, jQuery, optionsContainerTpl) {
 
         'use strict';
 
         var AbstractContent = new JS.Class({
 
             mainTag: '#bb5-ui',
+
+            contentClass: '.bb5-content',
 
             optionsContainerClass: 'bb5-content-actions',
 
@@ -56,7 +58,7 @@ define(
              * Add properties to the content like bb5-content class or id
              */
             populate: function () {
-                this.jQueryObject.addClass('bb5-content');
+                this.addClass('bb5-content');
                 this.jQueryObject.attr('data-bb-id', this.id);
             },
 
@@ -74,7 +76,7 @@ define(
              * Select the content
              */
             select: function () {
-                this.jQueryObject.addClass('bb5-content-selected');
+                this.addClass('bb5-content-selected');
 
                 this.showOptions();
             },
@@ -82,8 +84,10 @@ define(
             /*
              * Unselect the content
              */
-            selectOut: function () {
-                this.jQueryObject.removeClass('bb5-content-selected');
+            unSelect: function () {
+                this.removeClass('bb5-content-selected');
+
+                this.hideOptions();
             },
 
             /**
@@ -108,7 +112,7 @@ define(
                         }
                     }
 
-                    this.jQueryObject.append(ViewManager.render(optionsContainerTpl, {'classes': this.optionsContainerClass, 'options': this.options}));
+                    this.jQueryObject.append(Renderer.render(optionsContainerTpl, {'classes': this.optionsContainerClass, 'options': this.options}));
                 }
 
                 this.jQueryObject.children('.' + this.optionsContainerClass).removeClass('hidden');
@@ -129,96 +133,44 @@ define(
              */
             computeMandatoryConfig: function (config) {
                 if (typeof config.jQueryObject !== 'object') {
-                    Core.exception('BadTypeException', 500, 'The jQuery object must be an object');
+                    Core.exception('BadTypeException', 500, 'The jQueryObject must be set');
                 }
                 this.jQueryObject = config.jQueryObject;
 
-                if (typeof config.objectIdentifier !== 'string') {
-                    Core.exception('BadTypeException', 500, 'The object identifier must be a string');
+                if (typeof config.uid !== 'string') {
+                    Core.exception('BadTypeException', 500, 'The uid must be set');
                 }
-                this.objectIdentifier = config.objectIdentifier;
+                this.uid = config.uid;
 
-                this.retrievalObjectIdentifier();
+                if (typeof config.classname !== 'string') {
+                    Core.exception('BadTypeException', 500, 'The classname must be set');
+                }
+                this.classname = config.classname;
+
+                if (typeof config.definition !== 'object') {
+                    this.definition = config.definition;
+                } else {
+                    this.definition = null;
+                }
 
                 this.id = Math.random().toString(36).substr(2);
             },
 
             /**
-             * Retrieve a object identifier for split uid and classname
+             * Add a class to the content
+             * @param {String} className
              */
-            retrievalObjectIdentifier: function () {
-                var regex,
-                    res;
-
-                if (this.objectIdentifier) {
-
-                    regex = /(.+)\(([a-f0-9]+)\)$/;
-                    res = regex.exec(this.objectIdentifier);
-
-                    if (null !== res) {
-                        this.classname = res[1];
-                        this.uid = res[2];
-                    }
-                }
-            },
-
-            /***** EVENTS *****/
-
-            /**
-             * Event trigged on click
-             *
-             * @param {Object} event
-             * @returns {Boolean}
-             */
-            onClick: function (event) {
-                event.stopPropagation();
-
-                this.select();
-
-                return false;
+            addClass: function (className) {
+                this.jQueryObject.addClass(className);
             },
 
             /**
-             * Event trigged when user click out of content zone
-             * @param {Object} event
-             * @returns {Boolean}
+             * RemoveClass to the content
+             * @param {String} className
              */
-            onClickOut: function (event) {
-                event.stopPropagation();
-
-                this.selectOut();
-                this.hideOptions();
-
-                return false;
-            },
-
-            /**
-             * Event trigged on mouse enter in content zone
-             * @param {Object} event
-             * @returns {Boolean}
-             */
-            onMouseEnter: function (event) {
-                event.stopPropagation();
-
-                this.jQueryObject.addClass('bb5-content-hover');
-
-                return false;
-            },
-
-            /**
-             * Event trigged on mouse leave from content zone
-             * @param {Object} event
-             * @returns {Boolean}
-             */
-            onMouseLeave: function (event) {
-                event.stopPropagation();
-
-                this.jQueryObject.removeClass('bb5-content-hover');
-
-                return false;
+            removeClass: function (className) {
+                this.jQueryObject.removeClass(className);
             }
-
-            /***** EVENTS END *****/
         });
 
         return AbstractContent;
