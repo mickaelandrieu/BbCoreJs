@@ -107,7 +107,7 @@ define(['jquery', 'tb.core.Renderer', 'text!main/tpl/toolbar'], function (jQuery
                             {
                                 label: 'edit',
                                 text: 'Edition',
-                                url: '#edit',
+                                url: '#/contribution/index',
                                 active: false
                             },
                             {
@@ -161,24 +161,6 @@ define(['jquery', 'tb.core.Renderer', 'text!main/tpl/toolbar'], function (jQuery
                 ]
             };
 
-            this.bindUiEvents();
-        },
-
-        /**
-         * Events of view
-         */
-        bindUiEvents: function () {
-            jQuery(this.el).on('click', 'ul#bb5-maintabs li a', this.manageMenu);
-        },
-
-        /**
-         * Manager of menu
-         * @param {Object} event
-         */
-        manageMenu: function (event) {
-            var self = jQuery(event.currentTarget);
-            jQuery('ul#bb5-maintabs li.active').removeClass('active');
-            self.parent('li').addClass('active');
         },
 
         /**

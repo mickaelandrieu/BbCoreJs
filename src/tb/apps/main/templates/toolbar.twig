@@ -2,15 +2,15 @@
 <nav id="bb5-navbar-primary" class="navbar navbar-inverse clearfix" role="navigation">
     <ul class="nav nav-tabs bb5-ui-width-setter" id="bb5-maintabs">
         {% for menu in menus %}
-            <li class="dropdown{% if menu.active %} active{% endif %}">
-                <a data-toggle="dropdown" class="dropdown-toggle" id="{{ menu.label }}-menu" href="{{ menu.url }}">
+            <li class="dropdown">
+                <a class="dropdown-toggle" id="{{ menu.label }}-menu" href="{{ menu.url }}">
                     {{ menu.text }}
                     <b class="caret"></b>
                 </a>
                 <ul aria-labelledby="{{ menu.label }}" role="menu" class="dropdown-menu">
                     {% for item in menu.items %}
-                        <li class="{% if item.active %}active{% endif %}">
-                            <a data-toggle="tab" tabindex="-1" href="{{ item.url }}">{{ item.text }}</a>
+                        <li>
+                            <a data-toggle="tab" class="bb-item-menu" tabindex="-1" href="{{ item.url }}">{{ item.text }}</a>
                         </li>
                     {% endfor %}
                 </ul>

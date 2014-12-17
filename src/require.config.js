@@ -32,6 +32,7 @@ require.config({
         'nunjucks': 'lib/nunjucks/nunjucks.min',
         'moment': 'lib/moment/moment',
         'text': 'lib/requirejs-text/text',
+        'bootstrapjs': 'lib/bootstrap/bootstrap',
         'URIjs': 'lib/uri.js',
         'datetimepicker': 'lib/datetimepicker/jquery.datetimepicker',
         "jquery-layout" : 'lib/jquery.layout/jquery.layout-latest'
