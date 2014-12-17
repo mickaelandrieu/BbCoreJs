@@ -40,7 +40,17 @@
     padding-top: 15px;
     margin-bottom: 15px;
     margin-top: 15px;
+    cursor: move;
 } /*min-height*/
+
+.bb5-content-void {
+    position: relative;
+    min-width: 100px;
+    background: transparent url(img/bb5-content-void.png) no-repeat scroll 50% 50%;
+    background-size: 100%;
+    min-height: 50px;
+    padding: 50px 0 50px 0;
+}
 
 .bb5-content.bb5-content-hover {-webkit-box-shadow:0px 0px 1px 3px rgba(0,0,0,0.2); box-shadow:0px 0px 1px 3px rgba(0,0,0,0.2);}
 
