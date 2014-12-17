@@ -19,14 +19,16 @@
 
 define(
     [
+        'tb.core',
         'jquery',
         'content.models.Content',
         'content.models.ContentSet',
         'definition.manager',
         'content.container',
+        'component!dnd',
         'jsclass'
     ],
-    function (jQuery, Content, ContentSet, DefinitionManager, ContentContainer) {
+    function (Core, jQuery, Content, ContentSet, DefinitionManager, ContentContainer, dnd) {
 
         'use strict';
 
@@ -37,6 +39,8 @@ define(
             contentSelectedClass: 'bb5-content-selected',
             identifierAttribute: 'data-bb-identifier',
             idAttribute: 'data-bb-id',
+            blockClass: 'bb5-block',
+            dropZoneAttribute: '*[dropzone="true"]',
 
             elements: [],
 
@@ -54,6 +58,26 @@ define(
                 jQuery('.' + this.contentClass).on('click', jQuery.proxy(this.onClick, this));
                 jQuery('.' + this.contentClass).on('mouseenter', jQuery.proxy(this.onMouseEnter, this));
                 jQuery('.' + this.contentClass).on('mouseleave', jQuery.proxy(this.onMouseLeave, this));
+
+                dnd.addListeners(jQuery('body'), 'classcontent');
+
+                Core.Mediator.subscribe('on:classcontent:dragstart', this.onDragStart, this);
+                Core.Mediator.subscribe('on:classcontent:dragover', this.onDragOver, this);
+                Core.Mediator.subscribe('on:classcontent:drop', this.onDrop, this);
+                Core.Mediator.subscribe('on:classcontent:dragend', this.onDragEnd, this);
+            },
+
+            buildContentSet: function () {
+                var self = this,
+                    dropzone = jQuery(this.dropZoneAttribute).not('[' + this.idAttribute + ']');
+
+                dropzone.each(function () {
+                    var currentTarget = jQuery(this);
+
+                    if (currentTarget.hasClass('bb5-content') && currentTarget.data('bb-identifier')) {
+                        ContentContainer.addContent(self.buildElement(currentTarget));
+                    }
+                });
             },
 
             /**
@@ -61,13 +85,12 @@ define(
              * @param {Object} event
              * @returns {Object}
              */
-            buildElement: function (event) {
-                var currentTarget = jQuery(event.currentTarget),
-                    config = {},
+            buildElement: function (element) {
+                var config = {},
                     identifier,
                     content,
-                    id = currentTarget.attr(this.idAttribute),
-                    objectIdentifier = currentTarget.attr(this.identifierAttribute);
+                    id = element.attr(this.idAttribute),
+                    objectIdentifier = element.attr(this.identifierAttribute);
 
                 if (id === undefined && objectIdentifier !== undefined) {
                     identifier = this.retrievalObjectIdentifier(objectIdentifier);
@@ -75,7 +98,7 @@ define(
 
                     config.classname = identifier.classname;
                     config.definition = DefinitionManager.find(config.classname);
-                    config.jQueryObject = currentTarget;
+                    config.jQueryObject = element;
 
                     if (config.definition !== null) {
                         if (config.definition.properties.is_container) {
@@ -85,7 +108,7 @@ define(
                         }
                     }
                 } else {
-                    content = ContentContainer.find(currentTarget.attr(this.idAttribute));
+                    content = ContentContainer.find(element.attr(this.idAttribute));
                 }
 
                 return content;
@@ -112,7 +135,45 @@ define(
                 return res;
             },
 
+
             /***** EVENTS *****/
+
+            onDragStart: function (event) {
+                event.stopPropagation();
+
+                event.dataTransfer.effectAllowed = 'move';
+
+                var target = jQuery(event.target),
+                    type = target.data('bb-type'),
+                    key;
+
+                this.buildContentSet();
+
+                this.contentSetDroppable = ContentContainer.findContentSetByAccept(type);
+
+                for (key in this.contentSetDroppable) {
+                    if (this.contentSetDroppable.hasOwnProperty(key)) {
+                        this.contentSetDroppable[key].addClass('bb5-content-void');
+                    }
+                }
+            },
+
+            onDragOver: function (event) {
+                if (event.target.getAttribute('dropzone')) {
+                    event.preventDefault();
+                }
+            },
+
+            onDrop: function (event) {
+                var idelt = event.dataTransfer.getData('type');
+                event.target.appendChild(document.getElementById(idelt));
+                event.stopPropagation();
+                event.preventDefault();
+            },
+
+            onDragEnd: function (event) {
+                event.dataTransfer.clearData('type');
+            },
 
             /**
              * Event trigged on click
@@ -124,7 +185,7 @@ define(
                 event.stopPropagation();
 
                 var currentSelected = jQuery('.' + this.contentSelectedClass),
-                    content = this.buildElement(event),
+                    content = this.buildElement(jQuery(event.currentTarget)),
                     currentContent;
 
                 if (currentSelected.length > 0) {

@@ -48,6 +48,25 @@ define(['jsclass'], function () {
             return result;
         },
 
+        findContentSetByAccept: function (accept) {
+            var key,
+                content,
+                result = [];
+
+            for (key in this.contents) {
+                if (this.contents.hasOwnProperty(key)) {
+                    content = this.contents[key];
+                    if (content.isContentSet) {
+                        if (content.accept(accept)) {
+                            result.push(content);
+                        }
+                    }
+                }
+            }
+
+            return result;
+        },
+
         /**
          * Add content to the container
          * @param {Object} content

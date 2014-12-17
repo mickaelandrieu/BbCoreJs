@@ -1,0 +1,49 @@
+<div class="tab-pane active" id="profile">
+    <div class="row">
+        <div class="col-bb5-80 bb5-border-right">
+            <div class="row">
+                <div class="col-bb5-40">
+                    <p>
+                        <select class="form-inline input-xs" name="[]" id="select-categories-blocks-contrib">
+                            <option value="">Catégorie des blocs</option>
+                            {% for category in categories %}
+                                {% if category.show %}
+                                    <option value="{{ category.id }}">{{ category.name }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </p>
+                    <p>
+                        <button id="palette-contrib-blocks"type="button" class="btn btn-default-grey btn-xs">Palette des blocs</button>
+                    </p>
+                </div>
+                <div class="col-bb5-60">
+                    <p>
+                        <strong>Sélectionnez un bloc de contribution</strong>
+                    </p>
+                    <div>
+                        <div id="carousel-blocks" class="carousel slide bb5-ui-carousel" data-ride="carousel" data-interval="false">
+                            <!-- Wrapper for slides -->
+                            <div class="carousel-inner" id="carousel-contrib-blocks">
+
+                            </div><!--/.carousel-inner-->
+
+                            <!-- Controls -->
+                            <a class="left carousel-control" href="#carousel-blocks-choice" data-slide="prev">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a class="right carousel-control" href="#carousel-blocks-choice" data-slide="next">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-bb5-20">
+            <p><label><input type="checkbox" name="grid"> Afficher</label></p>
+            <p><label><input type="checkbox" name="grid"> Afficher contenu externe</label></p>
+            <p><label><input type="checkbox" name="grid"> Afficher les liens</label></p>
+        </div>
+    </div><!--/.row-->
+</div>

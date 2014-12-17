@@ -48,6 +48,15 @@ define(
              */
             findDefinitions: function () {
                 return CoreDriverHandler.read(this.TYPE + '/definition');
+            },
+
+            /**
+             * Find all categories
+             * @returns {Promise}
+             */
+            findCategories: function () {
+                return CoreDriverHandler.read(this.TYPE + '/category');
+
             }
         });
 
