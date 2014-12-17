@@ -24,6 +24,11 @@ define(["tb.core"], function (bbCore) {
      */
     bbCore.RouteManager.registerRoute("content", {
         prefix: "content",
-        routes: {}
+        routes: {
+            'contribution.index': {
+                url: '/contribution/index',
+                action: 'MainController:contributionIndex'
+            }
+        }
     });
 });

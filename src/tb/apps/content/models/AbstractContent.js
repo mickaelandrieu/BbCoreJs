@@ -20,158 +20,128 @@
 define(
     [
         'tb.core',
-        'tb.core.Renderer',
-        'content.models.Option',
         'jquery',
-        'text!content/tpl/options_container',
         'jsclass'
     ],
-    function (Core, Renderer, Option, jQuery, optionsContainerTpl) {
+    function (Core, jQuery) {
 
         'use strict';
 
-        var AbstractContent = new JS.Class({
+        var STATE_NORMAL = 1,
+            STATE_NEW = 2,
+            STATE_UPDATE = 3,
 
-            mainTag: '#bb5-ui',
+            AbstractContent = new JS.Class({
 
-            contentClass: '.bb5-content',
+                mainTag: '#bb5-ui',
 
-            optionsContainerClass: 'bb5-content-actions',
+                contentClass: '.bb5-content',
 
-            /**
-             * Initialize AbstractContent
-             *
-             * @param {Object} config
-             */
-            initialize: function (config) {
-                this.options = [];
-                this.config = config;
+                /**
+                 * Initialize AbstractContent
+                 *
+                 * @param {Object} config
+                 */
+                initialize: function (config) {
+                    this.config = config;
 
-                this.computeMandatoryConfig(config);
+                    this.state = STATE_NORMAL;
 
-                this.populate();
+                    this.computeMandatoryConfig(config);
 
-                this.bindEvents();
-            },
+                    this.populate();
 
-            /**
-             * Add properties to the content like bb5-content class or id
-             */
-            populate: function () {
-                this.addClass('bb5-content');
-                this.jQueryObject.attr('data-bb-id', this.id);
-            },
+                    this.bindEvents();
+                },
 
-            /**
-             * Bind events of content
-             */
-            bindEvents: function () {
-                jQuery('html').off().on('click', jQuery.proxy(this.onClickOut, this));
-                this.jQueryObject.on('click', jQuery.proxy(this.onClick, this));
-                this.jQueryObject.on('mouseenter', jQuery.proxy(this.onMouseEnter, this));
-                this.jQueryObject.on('mouseleave', jQuery.proxy(this.onMouseLeave, this));
-            },
+                /**
+                 * Set state of update
+                 * @param {Boolean} state
+                 */
+                setState: function (state) {
+                    if (state === STATE_NORMAL || state === STATE_NEW || state === STATE_UPDATE) {
+                        this.state = state;
+                    }
+                },
 
-            /**
-             * Select the content
-             */
-            select: function () {
-                this.addClass('bb5-content-selected');
+                /**
+                 * Add properties to the content like bb5-content class or id
+                 */
+                populate: function () {
+                    this.jQueryObject.attr('data-bb-id', this.id);
+                },
 
-                this.showOptions();
-            },
+                /**
+                 * Bind events of content
+                 */
+                bindEvents: function () {
+                    jQuery('html').off().on('click', jQuery.proxy(this.onClickOut, this));
+                    this.jQueryObject.on('click', jQuery.proxy(this.onClick, this));
+                    this.jQueryObject.on('mouseenter', jQuery.proxy(this.onMouseEnter, this));
+                    this.jQueryObject.on('mouseleave', jQuery.proxy(this.onMouseLeave, this));
+                },
 
-            /*
-             * Unselect the content
-             */
-            unSelect: function () {
-                this.removeClass('bb5-content-selected');
+                /**
+                 * Select the content
+                 */
+                select: function () {
+                    this.addClass('bb5-content-selected');
+                },
 
-                this.hideOptions();
-            },
+                /*
+                 * Unselect the content
+                 */
+                unSelect: function () {
+                    this.removeClass('bb5-content-selected');
+                },
 
-            /**
-             * Build the options with config, callback
-             * of the content
-             */
-            showOptions: function () {
-                if (this.options.length === 0) {
+                /**
+                 * compute and verify the config
+                 * jQueryObject, objectIdentifier and id must be set
+                 *
+                 * @param {Object} config
+                 */
+                computeMandatoryConfig: function (config) {
+                    if (typeof config.jQueryObject !== 'object') {
+                        Core.exception('BadTypeException', 500, 'The jQueryObject must be set');
+                    }
+                    this.jQueryObject = config.jQueryObject;
 
-                    var key,
-                        option,
-                        config = this.config.optionsConfig;
+                    if (typeof config.uid !== 'string') {
+                        Core.exception('BadTypeException', 500, 'The uid must be set');
+                    }
+                    this.uid = config.uid;
 
-                    for (key in config) {
-                        if (config.hasOwnProperty(key)) {
-                            option = config[key];
-                            option.object = this;
+                    if (typeof config.classname !== 'string') {
+                        Core.exception('BadTypeException', 500, 'The classname must be set');
+                    }
+                    this.classname = config.classname;
 
-                            option.classes = 'bb5-button ' + option.icoClass + ' bb5-button-square bb5-invert';
-
-                            this.options.push(new Option(option));
-                        }
+                    if (typeof config.definition !== 'object') {
+                        this.definition = config.definition;
+                    } else {
+                        this.definition = null;
                     }
 
-                    this.jQueryObject.append(Renderer.render(optionsContainerTpl, {'classes': this.optionsContainerClass, 'options': this.options}));
+                    this.id = Math.random().toString(36).substr(2);
+                },
+
+                /**
+                 * Add a class to the content
+                 * @param {String} className
+                 */
+                addClass: function (className) {
+                    this.jQueryObject.addClass(className);
+                },
+
+                /**
+                 * RemoveClass to the content
+                 * @param {String} className
+                 */
+                removeClass: function (className) {
+                    this.jQueryObject.removeClass(className);
                 }
-
-                this.jQueryObject.children('.' + this.optionsContainerClass).removeClass('hidden');
-            },
-
-            /**
-             * Hide options of the content
-             */
-            hideOptions: function () {
-                this.jQueryObject.children('.' + this.optionsContainerClass).addClass('hidden');
-            },
-
-            /**
-             * compute and verify the config
-             * jQueryObject, objectIdentifier and id must be set
-             *
-             * @param {Object} config
-             */
-            computeMandatoryConfig: function (config) {
-                if (typeof config.jQueryObject !== 'object') {
-                    Core.exception('BadTypeException', 500, 'The jQueryObject must be set');
-                }
-                this.jQueryObject = config.jQueryObject;
-
-                if (typeof config.uid !== 'string') {
-                    Core.exception('BadTypeException', 500, 'The uid must be set');
-                }
-                this.uid = config.uid;
-
-                if (typeof config.classname !== 'string') {
-                    Core.exception('BadTypeException', 500, 'The classname must be set');
-                }
-                this.classname = config.classname;
-
-                if (typeof config.definition !== 'object') {
-                    this.definition = config.definition;
-                } else {
-                    this.definition = null;
-                }
-
-                this.id = Math.random().toString(36).substr(2);
-            },
-
-            /**
-             * Add a class to the content
-             * @param {String} className
-             */
-            addClass: function (className) {
-                this.jQueryObject.addClass(className);
-            },
-
-            /**
-             * RemoveClass to the content
-             * @param {String} className
-             */
-            removeClass: function (className) {
-                this.jQueryObject.removeClass(className);
-            }
-        });
+            });
 
         return AbstractContent;
     }

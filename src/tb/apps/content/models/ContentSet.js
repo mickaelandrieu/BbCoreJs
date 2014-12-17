@@ -31,7 +31,30 @@ define(['content.models.AbstractContent', 'jsclass'], function (AbstractContent)
         initialize: function (config) {
             config.optionsConfig = this.defaultOptionsConfig;
 
+            this.isContentSet = true;
+
             this.callSuper(config);
+        },
+
+        accept: function (accept) {
+            var accepts = this.config.definition.accept,
+                key,
+                result = false;
+
+            if (accepts.length === 0) {
+                result = true;
+            } else {
+                for (key in accepts) {
+                    if (accepts.hasOwnProperty(key)) {
+                        if (accepts[key] === accept) {
+                            result = true;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return result;
         }
     });
 

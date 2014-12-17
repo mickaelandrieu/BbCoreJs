@@ -39,12 +39,16 @@ require.config({
         'content.models.AbstractContent': 'src/tb/apps/content/models/AbstractContent',
         'content.models.Content': 'src/tb/apps/content/models/Content',
         'content.models.ContentSet': 'src/tb/apps/content/models/ContentSet',
-        'content.models.Option': 'src/tb/apps/content/models/Option',
 
         //Templates
-        'content/tpl/options_container': 'src/tb/apps/content/templates/options-container.twig',
         'content/tpl/button': 'src/tb/apps/content/templates/button.twig',
-        'content/tpl/content_breadcrumb': 'src/tb/apps/content/templates/content-breadcrumb.twig'
+        'content/tpl/content_breadcrumb': 'src/tb/apps/content/templates/content-breadcrumb.twig',
+        'content/tpl/contribution/index': 'src/tb/apps/content/templates/contribution.index.twig',
+        'content/tpl/carousel_blocks': 'src/tb/apps/content/templates/carousel-blocks.twig',
+        'content/tpl/palette_blocks': 'src/tb/apps/content/templates/palette-blocks.twig',
+
+        //Views
+        'content.view.contribution.index': 'src/tb/apps/content/views/content.view.contribution.index'
     }
 });
 
