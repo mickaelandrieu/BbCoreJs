@@ -19,24 +19,26 @@
             #boxA { background-color: blue; }
             #boxB { background-color: green; }
             #boxC { background-color: yellow; }
-            #drag, #drag2, #drag3 {
+            #drag, #drag2, #drag3, #drag4 {
                 width:50px; height:50px; padding:5px; margin:5px;
                 -moz-user-select:none;
             }
             #drag { background-color: red;}
             #drag2 { background-color: orange;}
-            #drag3 { background-color: purple; border:3px brown solid;}
+            #drag3 { background-color: purple;}
+            #drag4 { background-color: black;}
         </style>
     </head>
     <body>
         <div id="container" class="container">
-            <div id="boxA" dropzone="true">
-                <div id="drag" data-dnd-type="content" draggable="true">drag me</div>
-                <div id="drag2" draggable="true">drag me</div>
-                <div id="drag3" draggable="true">drag me</div>
+            <div id="boxA" dropzone="true" class="droptrue">
+                <div id="drag" class="content droptrue" draggable="true">drag me</div>
+                <div id="drag2" class="droptrue" draggable="true">drag me</div>
+                <div id="drag3" draggable="true"  class="droptrue">drag me</div>
             </div>
-            <div id="boxB" dropzone="true" data-dnd-type="droptrue"></div>
-            <div id="boxC" dropzone="true" data-dnd-type="droptrue"></div>
+            <div id="boxB" dropzone="true" class="droptrue"></div>
+            <div id="boxC" dropzone="true" class="droptrue"></div>
+            <button id="btn">add new block</button>
         </div>
 
         <script>
@@ -71,10 +73,14 @@
 
 
             require(['tb.core', 'component!dnd', 'jquery'], function (core, dnd, jquery) {
-                // var container = document.querySelector('#container');
-                var container = jquery('#container');
+                var btn = jquery('#btn');
+
+                btn.click(function () {
+                    jquery('<div id="drag4" draggable="true" class="droptrue">drag me</div>').appendTo('#boxA')
+                });
 
                 core.Mediator.subscribe('on:content:dragstart', function (event) {
+                    console.log('dragstart', event.target.getAttribute('id'));
                     event.dataTransfer.effectAllowed = 'move';
                     event.dataTransfer.setData('text', event.target.getAttribute('id'));
                     event.dataTransfer.setDragImage(event.target,0,0);
@@ -90,15 +96,15 @@
                     var idelt = event.dataTransfer.getData('text');
                     event.target.appendChild(document.getElementById(idelt));
                     event.stopPropagation();
+                    event.preventDefault();
                 });
 
                 core.Mediator.subscribe('on:content:dragend', function (event) {
                     event.dataTransfer.clearData('text');
                 });
 
-                dnd.addListeners(container, 'content');
+                dnd('#container').addListeners('content', '.droptrue');
             }, _errorHandler);
-
         </script>
     </body>
 </html>

@@ -1,23 +1,22 @@
 define(
     [
-        'tb.component/formbuilder/form/element/views/form.element.view.password',
-        'tb.component/formbuilder/form/ElementBuilder!Password',
-        'text!tb.component/formbuilder/form/element/templates/password.twig'
+        'tb.component/formbuilder/form/element/views/form.element.view.text',
+        'tb.component/formbuilder/form/ElementBuilder!Text',
+        'text!tb.component/formbuilder/form/element/templates/text.twig'
     ],
     function (view, Constructor, template) {
 
         'use strict';
 
-        describe('Testing ElementPassword', function () {
+        describe('Testing ElementDatetimepicker', function () {
 
             var config = {
-                    type: 'password',
-                    label: 'My password',
-                    value: '123456789',
-                    disabled: true
+                    type: 'datetimepicker',
+                    value: '1991-21-03',
+                    label: 'My datetimepicker'
                 },
                 formTag = 'hZ1e',
-                element = new Constructor('my_password', config, formTag, view, template);
+                element = new Constructor('name', config, formTag, view, template);
 
             it('Testing initialize', function () {
 

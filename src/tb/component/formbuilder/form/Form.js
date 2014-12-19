@@ -251,35 +251,35 @@ define('tb.component/formbuilder/form/Form', ['tb.core.Api', 'underscore', 'Back
                 template,
                 elementConfig,
                 ElementClass,
-                Element,
+                element,
                 group,
                 elementView,
                 elementTemplate;
 
             View = require(this.view);
-            template = require('text!' + this.template);
+            template = require(this.template);
 
             for (key in this.elements) {
                 if (this.elements.hasOwnProperty(key)) {
                     elementConfig = this.elements[key];
 
                     ElementClass = require(elementConfig.class);
-                    elementTemplate = require('text!' + elementConfig.template);
+                    elementTemplate = require(elementConfig.template);
                     elementView = require(elementConfig.view);
 
-                    Element = new ElementClass(key, elementConfig, this.id, elementView, elementTemplate, this.getError(key));
-                    group = Element.group;
+                    element = new ElementClass(key, elementConfig, this.id, elementView, elementTemplate, this.getError(key));
+                    group = element.group;
 
                     if (data !== undefined) {
                         if (data.hasOwnProperty(key)) {
-                            Element.value = data[key];
+                            element.value = data[key];
                         }
                     }
 
                     if (!items.hasOwnProperty(group)) {
                         items[group] = [];
                     }
-                    items[group].push(Element);
+                    items[group].push(element);
                 }
             }
 

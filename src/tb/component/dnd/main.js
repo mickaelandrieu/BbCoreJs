@@ -16,11 +16,13 @@
  * You should have received a copy of the GNU General Public License
  * along with BackBuilder5. If not, see <http://www.gnu.org/licenses/>.
  */
-/*global Node */
-define(['tb.core'], function (Core) {
+/*global MutationObserver */
+define(['tb.core', 'jquery'], function (Core, jQuery) {
     'use strict';
 
-    var mediator = Core.Mediator,
+    var parent,
+
+        mediator = Core.Mediator,
 
         dnd_process = [
             'dragstart',
@@ -32,59 +34,86 @@ define(['tb.core'], function (Core) {
             'dragend'
         ],
 
-        cleanEl = function (el) {
-            if (el instanceof Node) {
-                return el;
-            }
-            return el.get(0);
-        },
 
         bindEl = function (el, context, process) {
-            (function (el, process, context) {
-                el.addEventListener(process, function (event) {
+            (function (element, process, context) {
+                element.addEventListener(process, function (event) {
                     mediator.publish('on:' + context + ':' + process, event);
                 });
             }(el, process, context));
         },
 
-        dnd = {
-            defineAsDraggable: function (el, context) {
-                var i;
-                el = cleanEl(el);
-                context = context || 'undefined';
-
+        defineAs = function (keyword, el, context) {
+            var i;
+            if (el.dataset && el.dataset.dndAttached === 'true') {
+                return;
+            }
+            if (keyword === 'drag') {
                 for (i = 0; i < 3; i = i + 1) {
                     if (i === 2) {
                         i = i + 4;
                     }
                     bindEl(el, context, dnd_process[i]);
                 }
-            },
-
-            defineAsDropzone: function (el, context) {
-                var i;
-                el = cleanEl(el);
-                context = context || 'undefined';
-
+            } else {
                 for (i = 0; i < 4; i = i + 1) {
                     bindEl(el, context, dnd_process[i + 2]);
                 }
+            }
+            el.dataset.dndAttached = true;
+        },
+
+        attachListeners = function (parent, selector, context) {
+            var draggable = parent.find(selector + '[draggable="true"]'),
+                dropzone = parent.find(selector + '[dropzone="true"]');
+
+            context = context || 'undefined';
+
+            draggable.each(function (key) {
+                defineAs('drag', draggable.get(key), context);
+            });
+            dropzone.each(function (key) {
+                defineAs('drop', dropzone.get(key), context);
+            });
+        },
+
+        delegate = function (selector, context) {
+            if (MutationObserver !== undefined) {
+                var observer = new MutationObserver(function (mutations) {
+                    mutations.forEach(function (mutation) {
+                        attachListeners(jQuery(mutation.target), selector, context);
+                    });
+                });
+                observer.observe(parent.get(0), {childList: true, subtree: true});
+            } else {
+                parent.on('DOMSubtreeModified', function () {
+                    attachListeners(selector, context);
+                });
+            }
+        },
+
+        dnd = {
+            defineAsDraggable: function (context, selector) {
+                var el = parent.find((selector || '') + '[draggable="true"]');
+                context = context || 'undefined';
+                defineAs('drag', el, context);
             },
 
-            addListeners: function (parent, context) {
-                var draggable = cleanEl(parent).querySelectorAll('*[draggable="true"]'),
-                    dropzone = cleanEl(parent).querySelectorAll('*[dropzone="true"]'),
-                    i;
+            defineAsDropzone: function (context, selector) {
+                var el = parent.find((selector || '') + '[dropzone="true"]');
                 context = context || 'undefined';
+                defineAs('drop', el, context);
+            },
 
-                for (i = 0; i < draggable.length; i = i + 1) {
-                    this.defineAsDraggable(draggable[i], context);
-                }
-                for (i = 0; i < dropzone.length; i = i + 1) {
-                    this.defineAsDropzone(dropzone[i], context);
-                }
+            addListeners: function (context, selector) {
+                selector = selector || '';
+                delegate(selector, context);
+                attachListeners(parent, selector, context);
             }
         };
 
-    return dnd;
+    return function (selector) {
+        parent = jQuery(selector);
+        return dnd;
+    };
 });

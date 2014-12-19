@@ -1,10 +1,10 @@
 define(
     [
         'tb.component/formbuilder/form/element/views/form.element.view.textarea',
-        'tb.component/formbuilder/form/element/Textarea',
+        'tb.component/formbuilder/form/ElementBuilder!Textarea',
         'text!tb.component/formbuilder/form/element/templates/textarea.twig'
     ],
-    function (view, TextConstructor, template) {
+    function (view, Constructor, template) {
 
         'use strict';
 
@@ -16,7 +16,7 @@ define(
                     label: 'My textarea'
                 },
                 formTag = 'hZ1e',
-                element = new TextConstructor('textarea', config, formTag, view, template);
+                element = new Constructor('textarea', config, formTag, view, template);
 
             it('Testing initialize', function () {
 

@@ -1,23 +1,24 @@
 define(
     [
-        'tb.component/formbuilder/form/element/views/form.element.view.password',
-        'tb.component/formbuilder/form/ElementBuilder!Password',
-        'text!tb.component/formbuilder/form/element/templates/password.twig'
+        'tb.component/formbuilder/form/element/views/form.element.view.hidden',
+        'tb.component/formbuilder/form/ElementBuilder!Hidden',
+        'text!tb.component/formbuilder/form/element/templates/hidden.twig'
     ],
     function (view, Constructor, template) {
 
         'use strict';
 
-        describe('Testing ElementPassword', function () {
+        describe('Testing ElementHidden', function () {
 
             var config = {
-                    type: 'password',
-                    label: 'My password',
-                    value: '123456789',
+                    type: 'hidden',
+                    placeholder: 'Foo',
+                    value: 'Bar',
+                    label: 'Jean pierre',
                     disabled: true
                 },
                 formTag = 'hZ1e',
-                element = new Constructor('my_password', config, formTag, view, template);
+                element = new Constructor('name', config, formTag, view, template);
 
             it('Testing initialize', function () {
 
@@ -26,7 +27,6 @@ define(
             });
 
             it('Testing render', function () {
-
                 expect(element.render().length).toBeGreaterThan(0);
             });
         });

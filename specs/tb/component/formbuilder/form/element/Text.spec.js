@@ -1,10 +1,10 @@
 define(
     [
         'tb.component/formbuilder/form/element/views/form.element.view.text',
-        'tb.component/formbuilder/form/element/Text',
+        'tb.component/formbuilder/form/ElementBuilder!Text',
         'text!tb.component/formbuilder/form/element/templates/text.twig'
     ],
-    function (view, TextConstructor, template) {
+    function (view, Constructor, template) {
 
         'use strict';
 
@@ -18,17 +18,17 @@ define(
                     disabled: true
                 },
                 formTag = 'hZ1e',
-                elementText = new TextConstructor('name', config, formTag, view, template);
+                element = new Constructor('name', config, formTag, view, template);
 
             it('Testing initialize', function () {
 
-                expect(elementText.template.length).toBeGreaterThan(0);
-                expect(elementText.getValue()).toEqual(config.value);
+                expect(element.template.length).toBeGreaterThan(0);
+                expect(element.getValue()).toEqual(config.value);
             });
 
             it('Testing render', function () {
 
-                expect(elementText.render().length).toBeGreaterThan(0);
+                expect(element.render().length).toBeGreaterThan(0);
             });
         });
     }

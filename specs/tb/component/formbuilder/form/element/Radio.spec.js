@@ -1,10 +1,10 @@
 define(
     [
         'tb.component/formbuilder/form/element/views/form.element.view.radio',
-        'tb.component/formbuilder/form/element/Radio',
+        'tb.component/formbuilder/form/ElementBuilder!Radio',
         'text!tb.component/formbuilder/form/element/templates/radio.twig'
     ],
-    function (view, TextConstructor, template) {
+    function (view, Constructor, template) {
 
         'use strict';
 
@@ -18,7 +18,7 @@ define(
                     label: 'My radio'
                 },
                 formTag = 'hZ1e',
-                element = new TextConstructor('radio_name', config, formTag, view, template);
+                element = new Constructor('radio_name', config, formTag, view, template);
 
             it('Testing initialize', function () {
 

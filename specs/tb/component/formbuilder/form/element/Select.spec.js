@@ -1,10 +1,10 @@
 define(
     [
         'tb.component/formbuilder/form/element/views/form.element.view.select',
-        'tb.component/formbuilder/form/element/Select',
+        'tb.component/formbuilder/form/ElementBuilder!Select',
         'text!tb.component/formbuilder/form/element/templates/select.twig'
     ],
-    function (view, TextConstructor, template) {
+    function (view, Constructor, template) {
 
         'use strict';
 
@@ -19,19 +19,19 @@ define(
                     label: 'My select'
                 },
                 formTag = 'hZ1e',
-                elementText = new TextConstructor('list', config, formTag, view, template);
+                element = new Constructor('list', config, formTag, view, template);
 
             it('Testing initialize', function () {
 
-                expect(elementText.getOptions()).toEqual(config.options);
-                expect(elementText.getValue()).toEqual(config.selected);
-                expect(elementText.isMultiple()).toEqual(config.multiple);
-                expect(elementText.template.length).toBeGreaterThan(0);
+                expect(element.getOptions()).toEqual(config.options);
+                expect(element.getValue()).toEqual(config.selected);
+                expect(element.isMultiple()).toEqual(config.multiple);
+                expect(element.template.length).toBeGreaterThan(0);
             });
 
             it('Testing render', function () {
 
-                expect(elementText.render().length).toBeGreaterThan(0);
+                expect(element.render().length).toBeGreaterThan(0);
             });
         });
     }

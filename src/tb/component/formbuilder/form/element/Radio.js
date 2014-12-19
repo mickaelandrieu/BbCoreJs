@@ -17,13 +17,14 @@
  * along with BackBuilder5. If not, see <http://www.gnu.org/licenses/>.
  */
 
-define(['tb.component/formbuilder/form/element/Element', 'jsclass'], function (Element) {
+define('tb.component/formbuilder/form/element/Radio', function () {
+
     'use strict';
 
     /**
      * ElementRadio object
      */
-    var Radio = new JS.Class(Element, {
+    return {
 
         initialize: function (key, config, formTag, view, template, error) {
             this.callSuper(key, config, formTag, error);
@@ -62,7 +63,5 @@ define(['tb.component/formbuilder/form/element/Element', 'jsclass'], function (E
         isInline: function () {
             return this.inline;
         }
-    });
-
-    return Radio;
+    };
 });
