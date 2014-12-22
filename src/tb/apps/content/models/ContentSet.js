@@ -23,6 +23,8 @@ define(['content.models.AbstractContent', 'jsclass'], function (AbstractContent)
 
     var ContentSet = new JS.Class(AbstractContent, {
 
+        contentClass: 'bb-content',
+
         /**
          * Initialize Content
          *
@@ -34,6 +36,10 @@ define(['content.models.AbstractContent', 'jsclass'], function (AbstractContent)
             this.isContentSet = true;
 
             this.callSuper(config);
+        },
+
+        getNodeChildrens: function () {
+             return this.jQueryObject.children('.' + this.contentClass);
         },
 
         accept: function (accept) {
