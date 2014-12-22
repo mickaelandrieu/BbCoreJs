@@ -230,8 +230,6 @@ define(
                 jQuery(this.el).html(Renderer.render(template, {'categories': this.categories}));
 
                 this.showBlocksByCategory('_all');
-
-                dnd.addListeners(jQuery('#bb5-ui'), 'classcontent');
             }
         });
 
