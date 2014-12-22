@@ -33,7 +33,7 @@
 
 /* CONTENT */
 
-.bb5-content {
+.bb-content {
     position:relative;
     min-height:21px;
     padding-bottom: 15px;
@@ -43,18 +43,15 @@
     cursor: move;
 } /*min-height*/
 
-.bb5-content-void {
-    position: relative;
-    min-width: 100px;
-    background: transparent url(img/bb5-content-void.png) no-repeat scroll 50% 50%;
-    background-size: 100%;
+.bb-dropzone {
+    width: 100%;
     min-height: 50px;
-    padding: 50px 0 50px 0;
+    background-color:green;
 }
 
-.bb5-content.bb5-content-hover {-webkit-box-shadow:0px 0px 1px 3px rgba(0,0,0,0.2); box-shadow:0px 0px 1px 3px rgba(0,0,0,0.2);}
+.bb-content.bb-content-hover {-webkit-box-shadow:0px 0px 1px 3px rgba(0,0,0,0.2); box-shadow:0px 0px 1px 3px rgba(0,0,0,0.2);}
 
-.bb5-content.bb5-content-selected {-webkit-box-shadow:0px 0px 1px 3px rgba(227,78,38,0.85); box-shadow:0px 0px 1px 3px rgba(227,78,38,0.85);} /*clicked block -> orange*/
+.bb-content.bb-content-selected {-webkit-box-shadow:0px 0px 1px 3px rgba(227,78,38,0.85); box-shadow:0px 0px 1px 3px rgba(227,78,38,0.85);} /*clicked block -> orange*/
 
 
 /* END CONTENT */
