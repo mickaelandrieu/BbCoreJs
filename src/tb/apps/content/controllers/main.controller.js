@@ -39,15 +39,11 @@ define(
             },
 
             createView: function (Constructor, config, render) {
-                try {
                     var view = new Constructor(config);
 
                     if (render) {
                         view.render();
                     }
-                } catch (e) {
-                    console.log(e);
-                }
             },
 
             findDefinitionsService: function (page_uid) {
