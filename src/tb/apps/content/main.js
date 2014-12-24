@@ -34,6 +34,7 @@ require.config({
         'definition.manager': 'src/tb/apps/content/components/DefinitionManager',
         'content.container': 'src/tb/apps/content/components/ContentContainer',
         'content.breadcrumb': 'src/tb/apps/content/components/Breadcrumb',
+        'content.pluginmanager': 'src/tb/apps/content/components/PluginManager',
 
         //Models
         'content.models.AbstractContent': 'src/tb/apps/content/models/AbstractContent',
