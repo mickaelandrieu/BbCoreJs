@@ -7,7 +7,7 @@ define([], function () {
     return {
         core: {
             ApplicationManager: {
-                appPath: 'resources/src/tb/apps',
+                appPath: 'resources/toolbar/src/tb/apps',
 
                 /*ne charge que les onglets qui se trouvent dans 'applications'*/
                 active: 'main',

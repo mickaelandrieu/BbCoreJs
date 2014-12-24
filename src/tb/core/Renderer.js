@@ -45,7 +45,6 @@ define('tb.core.Renderer', ['require', 'nunjucks', 'jquery', 'tb.core.Utils', 'j
                 config = config || {};
                 config.placeholder = config.placeholder || this.placeholder;
                 config.action = config.action || 'html';
-
                 if (!path || typeof path !== "string") {
                     throw 'Renderer:asyncRender [path] parameter should be a string';
                 }
@@ -68,7 +67,7 @@ define('tb.core.Renderer', ['require', 'nunjucks', 'jquery', 'tb.core.Utils', 'j
             },
 
             onTemplateReady: function (config, params, template) {
-                jQuery(config.placeholder)[config.action](this.renderString(template, params));
+                jQuery(config.placeholder)[config.action](this.engine.renderString(template, params));
             }
         }),
 

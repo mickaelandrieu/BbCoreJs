@@ -12,9 +12,16 @@
             <p><a class="add_node_append">A node with append </a></p>
             <p><a class="add_node_before">A node before</a></p>
             <p><a class="add_node_after">A node after</a></p>
-            <iframe src="https://embed.spotify.com/?uri=spotify:track:3AwLzoK87JMBcKMXlJ97ku" width="300" height="380" frameborder="0" allowtransparency="true"></iframe>
+            <p class="data-list-btn">Show a data list</p>
+
     </div>
     <div class="col-md-6">
-        <div class="renderContainer" style="">Place TreeView here</div>
+        <style type="text/css">
+            .selected {
+                cursor: pointer;
+                border: 1px solid red
+            }
+        </style>
+        <div id='data-list' style="margin-top:50px"></div>
     </div>
 </div>

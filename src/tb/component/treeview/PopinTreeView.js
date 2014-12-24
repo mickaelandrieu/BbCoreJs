@@ -21,9 +21,11 @@ define(["jquery", "tb.component/treeview/TreeView", "tb.component/popin/main"], 
                     this.display();
                 }
             },
+
             getPopIn: function () {
                 return this.popIn;
             },
+
             getTreeView: function () {
                 return this.treeView;
             },

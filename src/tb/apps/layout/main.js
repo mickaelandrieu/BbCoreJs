@@ -25,7 +25,7 @@ require.config({
         "layout/tpl/home": "src/tb/apps/layout/templates/home.tpl"
     }
 });
-define("app.layout", ["require", "tb.core"], function (require) {
+define("app.layout", ["require", "tb.core", 'datetimepicker'], function (require) {
     'use strict';
     var bbCore = require("tb.core");
     bbCore.ApplicationManager.registerApplication("layout", {

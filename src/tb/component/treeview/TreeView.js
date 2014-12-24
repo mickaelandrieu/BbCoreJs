@@ -18,9 +18,7 @@ define(["jquery", "lib.jqtree", "jsclass"], function (jQuery) {
         defaultOptions: {
             loadingMessage: "Loading...",
             allowMultiRoots: false,
-            beforeRender: function () {
-                return;
-            }
+            beforeRender: jQuery.noop
         },
         /**
          * TreeView class constructor

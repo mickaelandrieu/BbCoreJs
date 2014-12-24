@@ -3,15 +3,18 @@
 <html lang="en_EN">
     <head>
         <meta encoding="utf8">
-        <title>Login</title>
+        <title>Demo</title>
         <link rel="stylesheet" href="resources/html/css/style_reset.css">
         <link rel="stylesheet" href="resources/bower_components/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="resources/bower_components/jquery-ui/themes/ui-lightness/jquery-ui.min.css">
         <link rel="stylesheet" href="resources/html/css/bb5-skin03.css">
-        <link rel="stylesheet" href="resources/html/css/jquery-ui.css">
+        <link rel="stylesheet" href="resources/lib/datetimepicker/jquery.datetimepicker.css">
+        <link rel="stylesheet" href="resources/html/css/fix.css">
         <link rel="stylesheet" href="resources/html/css/font-awesome.min.css">
         <link rel="stylesheet" href="resources/html/css/bb5-ui.css">
         <script src="resources/bower_components/requirejs/require.js"></script>
         <script src="resources/src/require.config.js"></script>
+    
     </head>
     <body>
         <div id="bb5-ui"></div>
@@ -72,25 +75,25 @@
 
             require(['tb.core', 'component!logger'], function (core, logger) {
                 var router = null;
-                console.log(logger);
-                // core.ApplicationManager.on('routesLoaded', function () {
-                //     /*cf http://backbonejs.org/#Router for available options */
-                //     router = core.RouteManager.initRouter({silent : false});
-                // });
 
-                // core.ApplicationManager.on('appError', function(reason){
-                //     console.log("bbCoreError --> ", reason);
-                // });
+        core.ApplicationManager.on('routesLoaded', function () {
+            /*cf http://backbonejs.org/#Router for available options */
+            router = core.RouteManager.initRouter({silent : false});
+        });
 
-                // core.ApplicationManager.on('appIsReady',function(app){
-                //     router.navigate(app.getMainRoute());
-                // });
+         core.ApplicationManager.on('appError', function(reason){
+             console.log("bbCoreError --> ", reason);
+         });
 
-                // try {
-                //     core.ApplicationManager.init(config.ApplicationManager);
-                // } catch(e){
-                //     console.log(e);
-                // }
+         core.ApplicationManager.on('appIsReady',function(app){
+             router.navigate(app.getMainRoute());
+        });
+
+        try {
+             core.ApplicationManager.init(config.ApplicationManager);
+         } catch(e){
+             console.log(e);
+         }
             }, _errorHandler);
 
         </script>

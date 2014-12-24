@@ -91,9 +91,10 @@ define('tb.core.Utils', ['jquery', 'tb.core.Api'], function (jQuery, Api) {
                     if (!key.hasOwnProperty(this.idKey)) {
                         throw "SmartList:set should have a key " + this.idKey;
                     }
-                    key = key[this.idKey];
                     value = key;
+                    key = key[this.idKey];
                 }
+
                 if (!this.dataContainer.hasOwnProperty(key)) {
                     var bound = this.itemCount + 1;
                     if (this.maxEntry && (bound > this.maxEntry)) {

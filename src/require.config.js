@@ -17,7 +17,7 @@
  * along with BackBuilder5. If not, see <http://www.gnu.org/licenses/>.
  */
 require.config({
-    baseUrl: 'resources/',
+    baseUrl: 'resources/toolbar/',
     catchError: true,
     urlArgs: 'cb=' + Math.random(),
     paths: {
