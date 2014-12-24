@@ -26,39 +26,89 @@ define(
 
         'use strict';
 
-        /**
-         * Contnet repository class
-         * @type {Object} JS.Class
-         */
-        var ContentRepository = new JS.Class({
-
-            TYPE: 'classcontent',
-
+        var putMandatoriesAttribute = ['type'],
             /**
-             * Initialize of Page repository
+             * Contnet repository class
+             * @type {Object} JS.Class
              */
-            initialize: function () {
-                CoreRestDriver.setBaseUrl('/rest/1/');
-                CoreDriverHandler.addDriver('rest', CoreRestDriver);
-            },
+            ContentRepository = new JS.Class({
 
-            /**
-             * Find all definitions
-             * @returns {Promise}
-             */
-            findDefinitions: function () {
-                return CoreDriverHandler.read(this.TYPE + '/definition');
-            },
+                TYPE: 'classcontent',
 
-            /**
-             * Find all categories
-             * @returns {Promise}
-             */
-            findCategories: function () {
-                return CoreDriverHandler.read(this.TYPE + '/category');
+                /**
+                 * Initialize of Page repository
+                 */
+                initialize: function () {
+                    CoreRestDriver.setBaseUrl('/rest/1/');
+                    CoreDriverHandler.addDriver('rest', CoreRestDriver);
+                },
 
-            }
-        });
+                /**
+                 * Find all definitions
+                 * @returns {Promise}
+                 */
+                findDefinitions: function () {
+                    return CoreDriverHandler.read(this.TYPE + '/definition');
+                },
+
+                /**
+                 * Find all categories
+                 * @returns {Promise}
+                 */
+                findCategories: function () {
+                    return CoreDriverHandler.read(this.TYPE + '/category');
+
+                },
+
+                /**
+                 * Verify if the method is put method with a mandatories attributes array
+                 * @param {Object} data
+                 * @returns {Boolean}
+                 */
+                isPutMethod: function (data) {
+                    var key,
+                        mandatory,
+                        isValid = true;
+
+                    for (key in putMandatoriesAttribute) {
+                        if (putMandatoriesAttribute.hasOwnProperty(key)) {
+                            mandatory = putMandatoriesAttribute[key];
+                            if (!data.hasOwnProperty(mandatory)) {
+                                isValid = false;
+                                break;
+                            }
+                        }
+                    }
+
+                    return isValid;
+                },
+
+                /**
+                 * Save the content with a correctly method
+                 * @param {Object} data
+                 * @returns {Promise}
+                 */
+                save: function (data) {
+                    var result,
+                        uid;
+
+                    if (data.hasOwnProperty('uid')) {
+                        uid = data.uid;
+
+                        delete data.uid;
+
+                        if (this.isPutMethod(data)) {
+                            result = CoreDriverHandler.update(this.TYPE, data, {'id': uid}, {}, 0, null);
+                        } else {
+                            result = CoreDriverHandler.patch(this.TYPE, data, {'id': uid});
+                        }
+                    } else {
+                        result = CoreDriverHandler.create(this.TYPE + '/' + data.type);
+                    }
+
+                    return result;
+                }
+            });
 
         return new JS.Singleton(ContentRepository);
     }

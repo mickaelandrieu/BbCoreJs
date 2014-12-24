@@ -23,15 +23,13 @@ define(
         'text!content/tpl/contribution/index',
         'text!content/tpl/carousel_blocks',
         'tb.core.Renderer',
-        'text!content/tpl/palette_blocks',
-        'component!dnd'
+        'text!content/tpl/palette_blocks'
     ],
     function (jQuery,
               template,
               carouselBlocksTpl,
               Renderer,
-              paletteBlocksTpl,
-              dnd
+              paletteBlocksTpl
             ) {
 
         'use strict';
@@ -230,8 +228,6 @@ define(
                 jQuery(this.el).html(Renderer.render(template, {'categories': this.categories}));
 
                 this.showBlocksByCategory('_all');
-
-                dnd.addListeners(jQuery('#bb5-ui'), 'classcontent');
             }
         });
 

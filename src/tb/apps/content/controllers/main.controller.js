@@ -39,14 +39,10 @@ define(
             },
 
             createView: function (Constructor, config, render) {
-                try {
-                    var view = new Constructor(config);
+                var view = new Constructor(config);
 
-                    if (render) {
-                        view.render();
-                    }
-                } catch (e) {
-                    console.log(e);
+                if (render) {
+                    view.render();
                 }
             },
 

@@ -67,6 +67,24 @@ define(['jsclass'], function () {
             return result;
         },
 
+        isInArray: function (array, key, value) {
+            var i,
+                item,
+                result = false;
+
+            for (i in array) {
+                if (array.hasOwnProperty(i)) {
+                    item = array[i];
+                    if (item[key] === value) {
+                        result = true;
+                        break;
+                    }
+                }
+            }
+
+            return result;
+        },
+
         /**
          * Add content to the container
          * @param {Object} content
