@@ -52,11 +52,12 @@ define(
                 contentClass: 'bb-content',
                 contentHoverClass: 'bb-content-hover',
                 contentSelectedClass: 'bb-content-selected',
-                identifierAttribute: 'data-bb-identifier',
-                idAttribute: 'data-bb-id',
-                typeAttribute: 'data-bb-type',
+                identifierDataAttribute: 'bb-identifier',
+                idDataAttribute: 'bb-id',
+                typeDataAttribute: 'bb-type',
                 dndClass: 'bb-dnd',
                 dropZoneAttribute: '*[dropzone="true"]',
+                dropZoneClass: 'bb-dropzone',
 
                 elements: [],
 
@@ -89,12 +90,12 @@ define(
                  */
                 buildContentSet: function () {
                     var self = this,
-                        dropzone = jQuery(this.dropZoneAttribute).not('[' + this.idAttribute + ']');
+                        dropzone = jQuery(this.dropZoneAttribute).not('[data-' + this.idDataAttribute + ']');
 
                     dropzone.each(function () {
                         var currentTarget = jQuery(this);
 
-                        if (currentTarget.hasClass('bb-content') && currentTarget.data('bb-identifier')) {
+                        if (currentTarget.hasClass(self.contentClass) && currentTarget.data(self.identifierDataAttribute)) {
                             ContentContainer.addContent(self.buildElement(currentTarget));
                         }
                     });
@@ -117,8 +118,8 @@ define(
                     var config = {},
                         identifier,
                         content,
-                        id = element.attr(this.idAttribute),
-                        objectIdentifier = element.attr(this.identifierAttribute);
+                        id = element.data(this.idDataAttribute),
+                        objectIdentifier = element.data(this.identifierDataAttribute);
 
                     if (id === undefined && objectIdentifier !== undefined) {
 
@@ -138,7 +139,7 @@ define(
                             }
                         }
                     } else {
-                        content = ContentContainer.find(element.attr(this.idAttribute));
+                        content = ContentContainer.find(element.data(this.idDataAttribute));
                     }
 
                     return content;
@@ -152,8 +153,10 @@ define(
                         res = {};
 
                     if (objectIdentifier) {
-
+                        /*jslint regexp: true */
                         regex = /(.+)\(([a-f0-9]+)\)$/;
+                        /*jslint regexp: false */
+
                         res = regex.exec(objectIdentifier);
 
                         if (null !== res) {
@@ -188,55 +191,70 @@ define(
                  * @param {Object} contentSets
                  */
                 showHTMLZoneForContentSet: function (contentSets, currentContentId) {
-                    var self = this,
-                        key,
+                    var key,
                         contentSet,
                         childrens,
                         firstChild,
-                        div = '<div dropzone="true" class="bb-dropzone">DROPZONE</div>';
+                        div = '<div dropzone="true" class="' + this.dropZoneClass + '">DROPZONE</div>';
 
                     for (key in contentSets) {
                         if (contentSets.hasOwnProperty(key)) {
                             contentSet = contentSets[key];
 
-                            childrens = contentSet.getNodeChildrens();
-                            firstChild = childrens.first();
+                            contentSet.isChildrenOf(currentContentId);
+                            if (contentSet.id !== currentContentId && !contentSet.isChildrenOf(currentContentId)) {
 
-                            if (firstChild) {
-                                if (undefined !== currentContentId) {
-                                    if (firstChild.attr(this.idAttribute) !== currentContentId) {
+                                childrens = contentSet.getNodeChildrens();
+                                firstChild = childrens.first();
+
+                                if (firstChild.length > 0) {
+                                    if (undefined !== currentContentId) {
+                                        if (firstChild.data(this.idDataAttribute) !== currentContentId) {
+                                            firstChild.before(div);
+                                        }
+                                    } else {
                                         firstChild.before(div);
                                     }
                                 } else {
-                                    firstChild.before(div);
+                                    contentSet.jQueryObject.prepend(div);
                                 }
-                            } else {
-                                contentSet.jQueryObject.prepend(div);
+
+                                this.putDropZoneAroundContentSetChildrens(childrens, div, currentContentId);
                             }
-
-                            childrens.each(function () {
-                                var currentTarget = jQuery(this),
-                                    next = currentTarget.next('.' + self.contentClass);
-
-                                if (undefined !== currentContentId) {
-                                    if (currentTarget.attr(self.idAttribute) !== currentContentId &&
-                                        next.attr(self.idAttribute) !== currentContentId) {
-
-                                        currentTarget.after(div);
-                                    }
-                                } else {
-                                    currentTarget.after(div);
-                                }
-                            });
                         }
                     }
+                },
+
+                /**
+                 * Put HTML dropzone around the contentset's children
+                 * @param {Object} childrens
+                 * @param {String} template
+                 * @param {String} currentContentId
+                 */
+                putDropZoneAroundContentSetChildrens: function (childrens, template, currentContentId) {
+                    var self = this;
+
+                    childrens.each(function () {
+                        var currentTarget = jQuery(this),
+                            next = currentTarget.next('.' + self.contentClass);
+
+                        if (undefined !== currentContentId) {
+                            if (currentTarget.data(self.idDataAttribute) !== currentContentId &&
+                                    next.data(self.idDataAttribute) !== currentContentId) {
+
+                                currentTarget.after(template);
+                            }
+                        } else {
+                            currentTarget.after(template);
+                        }
+                    });
                 },
 
                 /**
                  * Delete all dropzone
                  */
                 cleanHTMLZoneForContentset: function () {
-                    jQuery('.bb-dropzone').remove();
+                    jQuery('.' + this.dropZoneClass).remove();
                 },
 
                 /**
@@ -281,16 +299,16 @@ define(
                         parent = content.jQueryObject.parent('.' + this.contentClass);
                         this.dropAsHtml(config, content.jQueryObject);
 
-                        if (parent.attr(this.idAttribute)) {
-                            parentAsContent = ContentContainer.find(parent.attr(this.idAttribute));
+                        if (parent.data(this.idDataAttribute)) {
+                            parentAsContent = ContentContainer.find(parent.data(this.idDataAttribute));
                         } else {
                             parentAsContent = this.buildElement(parent);
                         }
                         parentAsContent.setUpdated(true);
 
                         if (config.parent) {
-                            if (config.parent.attr(this.idAttribute)) {
-                                newParentAsContent = ContentContainer.find(config.parent.attr(this.idAttribute));
+                            if (config.parent.data(this.idDataAttribute)) {
+                                newParentAsContent = ContentContainer.find(config.parent.data(this.idDataAttribute));
                             } else {
                                 newParentAsContent = this.buildElement(config.parent);
                             }
@@ -315,9 +333,13 @@ define(
 
                 /***** EVENTS *****/
 
+                /**
+                 * Event trigged on start drag content
+                 * @param {Object} event
+                 */
                 onDragStart: function (event) {
                     event.stopPropagation();
-                    
+
                     var target = jQuery(event.target),
                         content,
                         id,
@@ -325,7 +347,8 @@ define(
                         type;
 
                     event.dataTransfer.effectAllowed = 'move';
-                    if (target.attr(this.identifierAttribute)) {
+
+                    if (target.data(this.identifierDataAttribute)) {
 
                         dataTransfer.onDrop = this.doDropContent;
 
@@ -341,11 +364,9 @@ define(
 
                         event.dataTransfer.setDragImage(img, 50, 50);
                     } else {
-                        if (target.attr(this.typeAttribute)) {
+                        if (target.data(this.typeDataAttribute)) {
                             dataTransfer.onDrop = this.doDropNewContent;
-                            type = target.attr(this.typeAttribute);
-                        } else {
-                            //stop drag
+                            type = target.data(this.typeDataAttribute);
                         }
                     }
 
@@ -358,12 +379,21 @@ define(
                     this.showHTMLZoneForContentSet(dataTransfer.contentSetDroppable, id);
                 },
 
+                /**
+                 * Event trigged on drag over dropzone
+                 * @param {Object} event
+                 */
                 onDragOver: function (event) {
                     if (jQuery(event.target).hasClass('bb-dropzone')) {
                         event.preventDefault();
                     }
                 },
 
+                /**
+                 * Event trigged on drop content
+                 * @param {Object} event
+                 * @returns {Boolean}
+                 */
                 onDrop: function (event) {
                     event.stopPropagation();
 
@@ -372,7 +402,7 @@ define(
                         prev = target.prev('.' + this.contentClass),
                         parent = target.parent();
 
-                    config.content = ContentContainer.find(parent.attr(this.idAttribute));
+                    config.content = ContentContainer.find(parent.data(this.idDataAttribute));
                     config.event = event;
 
                     if (prev.length === 0) {
@@ -386,9 +416,17 @@ define(
                     return false;
                 },
 
+                /**
+                 * Event trigged on drag end content
+                 * @param {Object} event
+                 * @returns {Boolean}
+                 */
                 onDragEnd: function (event) {
+                    event.stopPropagation();
                     this.cleanHTMLZoneForContentset();
                     dataTransfer = {};
+
+                    return false;
                 },
 
                 /**
@@ -400,12 +438,14 @@ define(
                 onClick: function (event) {
                     event.stopPropagation();
 
+                    Core.Mediator.publish('on:classcontent:click', event);
+
                     var currentSelected = jQuery('.' + this.contentSelectedClass),
                         content = this.buildElement(jQuery(event.currentTarget)),
                         currentContent;
 
                     if (currentSelected.length > 0) {
-                        currentContent = ContentContainer.find(currentSelected.attr(this.idAttribute));
+                        currentContent = ContentContainer.find(currentSelected.data(this.idDataAttribute));
                         currentContent.unSelect();
                     }
 
@@ -422,6 +462,8 @@ define(
                 onMouseEnter: function (event) {
                     event.stopImmediatePropagation();
 
+                    Core.Mediator.publish('on:classcontent:mouseenter', event);
+
                     jQuery('.' + this.contentHoverClass).removeClass(this.contentHoverClass);
 
                     jQuery(event.currentTarget).addClass(this.contentHoverClass);
@@ -433,6 +475,9 @@ define(
                  * @returns {Boolean}
                  */
                 onMouseLeave: function (event) {
+
+                    Core.Mediator.publish('on:classcontent:mouseleave', event);
+
                     var currentTarget = jQuery(event.currentTarget),
                         parentToSelect = currentTarget.parent('.' + this.contentClass);
 
@@ -448,6 +493,6 @@ define(
                 /***** EVENTS END *****/
             });
 
-            return new JS.Singleton(ContentManager);
-        }
+        return new JS.Singleton(ContentManager);
+    }
 );

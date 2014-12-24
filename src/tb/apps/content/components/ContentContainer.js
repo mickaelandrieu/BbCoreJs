@@ -82,7 +82,7 @@ define(['jsclass'], function () {
                 }
             }
 
-            return true;
+            return result;
         },
 
         /**

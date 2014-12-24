@@ -17,7 +17,7 @@
  * along with BackBuilder5. If not, see <http://www.gnu.org/licenses/>.
  */
 
-define(['content.models.AbstractContent', 'jsclass'], function (AbstractContent) {
+define(['content.models.AbstractContent', 'jquery', 'jsclass'], function (AbstractContent, jQuery) {
 
     'use strict';
 
@@ -39,7 +39,7 @@ define(['content.models.AbstractContent', 'jsclass'], function (AbstractContent)
         },
 
         getNodeChildrens: function () {
-             return this.jQueryObject.children('.' + this.contentClass);
+            return this.jQueryObject.children('.' + this.contentClass);
         },
 
         accept: function (accept) {
@@ -59,6 +59,23 @@ define(['content.models.AbstractContent', 'jsclass'], function (AbstractContent)
                     }
                 }
             }
+
+            return result;
+        },
+
+        isChildrenOf: function (contentSetId) {
+            var parents = this.jQueryObject.parents('[data-bb-id]'),
+                result = false;
+
+            parents.each(function () {
+                var currentTarget = jQuery(this);
+
+                if (currentTarget.attr('data-bb-id') === contentSetId) {
+                    result = true;
+
+                    return false;
+                }
+            });
 
             return result;
         }

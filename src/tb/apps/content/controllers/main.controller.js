@@ -39,11 +39,11 @@ define(
             },
 
             createView: function (Constructor, config, render) {
-                    var view = new Constructor(config);
+                var view = new Constructor(config);
 
-                    if (render) {
-                        view.render();
-                    }
+                if (render) {
+                    view.render();
+                }
             },
 
             findDefinitionsService: function (page_uid) {
