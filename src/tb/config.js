@@ -47,6 +47,13 @@ define([], function () {
             logger: {
 
             }
+        },
+
+        plugins: {
+            namespace: {
+                core: 'src/tb/apps/content/plugins/',
+                demo: ''
+            }
         }
     };
 });
