@@ -42,6 +42,7 @@ require.config({
         'content.models.ContentSet': 'src/tb/apps/content/models/ContentSet',
 
         //Templates
+        'content-templates': 'src/tb/apps/content/templates/',
         'content/tpl/button': 'src/tb/apps/content/templates/button.twig',
         'content/tpl/content_breadcrumb': 'src/tb/apps/content/templates/content-breadcrumb.twig',
         'content/tpl/contribution/index': 'src/tb/apps/content/templates/contribution.index.twig',
@@ -53,10 +54,15 @@ require.config({
     }
 });
 
-define("app.content", ["tb.core"], function (Core) {
+define('app.content', ['tb.core', 'content.pluginmanager'], function (Core, PluginManager) {
 
     'use strict';
 
-    Core.ApplicationManager.registerApplication("content", {});
+    Core.ApplicationManager.registerApplication("content", {
+
+        onInit: function () {
+            PluginManager.getInstance().watchContents();
+        }
+    });
 });
 

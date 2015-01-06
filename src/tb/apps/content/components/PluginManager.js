@@ -1,5 +1,10 @@
-define(['tb.core', 'tb.core.SmartList', 'jsclass'], function (Core, SmartList) {
-
+require.config({
+    paths: {
+        'contentplugin': 'src/tb/apps/content/plugins/contentplugin',
+        'actionContainer': 'src/tb/apps/content/components/ContentActionWidget'
+    }
+});
+define(['tb.core', 'jquery', 'tb.core.Utils', 'actionContainer', 'jsclass'], function (Core, jQuery, Utils, ContentActionWidget) {
     /**
      * Plugin anatomy
      * (For now) A plugin concern a content
@@ -11,56 +16,83 @@ define(['tb.core', 'tb.core.SmartList', 'jsclass'], function (Core, SmartList) {
      *
      **/
     var mediator = Core.Mediator,
-        AbstractPlugin = new JS.Class({
-
-            initialize : function () {
-                this.context = {};
-                this.init();
-            },
-
-            init: function () { console.log("init function"); },
-
-            createBtn: function () {},
-
-            checkContext: function () {
-             /**
-             * Check rather the plugin must be visible in this particulier context
-             */
-                return true;
-            },
-
-            setContext: function (context) {
-
-            },
-
-            editAction : function () {
-                alert("radical blaze");
-            },
-
-            exposeActions: function () {
-                var self = this;
-                return [{
-                    icon: 'fa fa-edit',
-                    scope: 'content-edit',
-                    action: function () {
-                        self.editAction();
-                    }
-                }];
+        pluginsInfos = {},
+        instance = null,
+        Command = function Command(func, context) {
+            this.execute = function () {
+                func.call(context);
             }
-
-
-
-    });
-
-    var PluginManager = new JS.Class({
-
-        initialize: function (config) {
-            this.pluginContainer =  new SmartList();
-            this.defContainer = {};
-            this.pluginNameSpace = {next:'../sdsd/sdd/'}; //where to look for a pluggin. This will allows us to load plugins provided by users
-            this.handleContentEvents();
+        }
+    AbstractPlugin = new JS.Class({
+        initialize: function () {
+            this.context = {};
+            this.enabled = false;
         },
 
+        onInit: function () {
+            console.log("onInit function");
+        },
+
+        onEnable: function () {
+            this.isEnabled = true;
+        },
+
+        onDisable: function () {
+            this.enabled = false;
+        },
+
+        isEnabled: function () {
+            return this.enabled;
+        },
+
+        createBtn: function () {},
+
+        /* Check Rather the plugin can be */
+        canApplyOnContext: function () {
+            return false;
+        },
+        createCommand: function (func, context) {
+            if (typeof func !== 'function') {
+                Core.exception("PluginException: createCommand parameter must be a function.");
+            }
+            var command, context = context || this;
+            command = (function (f, c) {
+                return new function () {
+                    this.execute = function () {
+                        f.call(c);
+                    }
+                }
+            }(func, context));
+            return command;
+        },
+        setContext: function (context) {
+            var previousContext = this.context;
+            this.context = context;
+            this.onContextChange(previousContext);
+        },
+
+        onContextChange: function () {},
+
+        editAction: function () {
+            alert("radical blaze");
+        },
+
+        getActions: function () {
+            return [];
+        }
+    });
+    var PluginManager = new JS.Class({
+        initialize: function (config) {
+            this.pluginsInfos = pluginsInfos;
+            this.pluginsInstance = {};
+            this.pluginNameSpace = {}; //where to look for a plugin. This will allows us to load plugins provided by users
+            this.contentActionWidget = new ContentActionWidget();
+            this.bindEvents();
+        },
+        bindEvents: function () {
+            mediator.subscribe('on:pluginManager:loadingErrors', jQuery.proxy(this.handleLoadingError, this), this);
+            mediator.subscribe('on:pluginManager:loading', jQuery.proxy(this.handleLoading, this), this);
+        },
         /**
          * Namespaces allow us to
          * default namespace is tbplugin
@@ -69,49 +101,149 @@ define(['tb.core', 'tb.core.SmartList', 'jsclass'], function (Core, SmartList) {
         registerNameSpace: function () {},
 
         isPluginLoaded: function (puglinName) {
+            if (this.pluginsInstance.hasOwnProperty(puglinName)) {
+                return true;
+            }
+            return false;
+        },
+
+        getPluginInstance: function (pluginName) {
+            return this.pluginsInstance[pluginName];
+        },
+
+        watchContents: function () {
+            var self = this,
+                context;
+            mediator.subscribe("on:classcontent:click", function (e) {
+                var context = {};
+                context.content = e.currentTarget;
+                jQuery(context.content).css('position', 'relative');
+                context.scope = 'content-click';
+                context.events = ['on:classcontent:click'];
+                self.context = context;
+                var plugins = ["edit", "redonclick"];
+                self.initPlugins(plugins); // check
+            });
+        },
+
+        handleLoading: function (pluginInfos) {
+            /* at this stage we know that the plugin is ready */
+            try {
+                var pluginName = pluginInfos['name'],
+                    instance = new this.pluginsInfos[pluginName]();
+                instance.setContext(this.context);
+                instance.onInit();
+                this.pluginsInstance[pluginName] = instance;
+            } catch (e) {
+                console.log(e);
+            }
+        },
+
+        handleLoadingErrors: function (pluginInfos) {
+            console.log('Error while loading plugin');
+        },
+
+        disablePlugins: function () {
+            jQuery.each(this.pluginsInstance, function (i, instance) {
+                instance = this.pluginsInstance[i];
+                instance.onDisable();
+            });
+            /* hide content action */
+            this.contentActionWidget.hide();
+        },
+
+        handleContentActions: function () {
 
         },
 
-        handleContentEvents: function () {
-            var self = this;
-            mediator.subscribe(" content:click", function () {
-                routeToplugins();
+        initPlugins: function (pluginsName) {
+            var self = this,
+                pluginName,
+                pluginInstance,
+                contentPlugins = [],
+                pluginsToLoad = [];
+            jQuery.each(pluginsName, function (i) {
+                pluginName = pluginsName[i];
+                if (self.isPluginLoaded(pluginName)) {
+                    pluginInstance = self.getPluginInstance(pluginName);
+                    pluginInstance.setContext(self.context);
+                    contentPlugins.push(pluginInstance);
+                    /* deal with content Actions here */
+                } else {
+                    pluginsToLoad[i] = 'contentplugin!' + pluginName;
+                }
             });
 
-        },
+            this.handlePluginActions(contentPlugins);
 
-
-        registerPlugin: function (puglinName, def) {
-            if(this.defContainer.hasOwnProperty(puglinName)) {
-                throw "PluginManagerException A plugin named " + puglinName +" already exists";
+            if (!pluginsToLoad.length) {
+                return;
             }
-            this.defContainer[puglinName] = this.createPluginClass(def);
+            /* all plugins are loaded at this stage */
+            Utils.requireWithPromise(pluginsToLoad).done(function () {
+                var pluginInfos = Array.prototype.slice.call(arguments),
+                    instances = [],
+                    pluginConf;
+                    jQuery.each(pluginInfos, function (i) {
+                        pluginConf = pluginInfos[i];
+                        instance = self.getPluginInstance(pluginConf.name);
+                        if (instance) {
+                            instances.push(instance);
+                        }
+                    });
+                self.handlePluginActions(instances);
+            });
         },
 
-        applyPlugins : function () {
-
+        /* show Content actions*/
+        handlePluginActions: function (pluginInstances) {
+            var pluginActions = [],
+                instance,
+                actions;
+            jQuery.each(pluginInstances, function (i) {
+                var instance = pluginInstances[i];
+                    actions = instance.getActions();
+                    jQuery.each(actions, function (i) {
+                        var action = actions[i];
+                        pluginActions.push(action);
+                    });
+            });
+            this.contentActionWidget.setContent(this.context.content);
+            this.contentActionWidget.appendActions(pluginActions);
+            this.contentActionWidget.show();
         },
 
         createPluginClass: function (def) {
-            /* Remove mandatory protected methods here */
+            /* Remove mandatory, protected methods here */
             /*if(def.hasOwnProperty("initialize")) {
             }*/
-            var pluginClass = new JS.Class(AbstractPlugin, def);
-
-        },
-
-        /* notify when plugin */
-        loadPlugin: function (pluglinName) {
-
+            return new JS.Class(AbstractPlugin, def);
         }
     });
+    return {
 
-return {
-    PluginManager : PluginManager
-}
+        getInstance: function () {
+            if (!instance) {
+                instance = new PluginManager();
+            }
+            return instance;
+        },
 
+        registerPlugin: function (pluginName, def) {
+            if (pluginsInfos.hasOwnProperty(pluginName)) {
+                throw "PluginManagerException A plugin named " + pluginName + " already exists";
+            }
+            def.getName = (function (name) {
+                return function () {
+                    return name;
+                }
+            }(pluginName));
+            pluginsInfos[pluginName] = this.getInstance().createPluginClass(def);
+        },
+
+        AbstractPlugin: AbstractPlugin
+    }
 });
-
 /**
  * Usage:
  * Le plugin Manager écoute les événements susceptibles de réveiller un ou plusieurs plugin

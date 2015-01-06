@@ -437,7 +437,6 @@ define(
                  */
                 onClick: function (event) {
                     event.stopPropagation();
-
                     Core.Mediator.publish('on:classcontent:click', event);
 
                     var currentSelected = jQuery('.' + this.contentSelectedClass),
@@ -450,8 +449,8 @@ define(
                     }
 
                     ContentContainer.addContent(content);
-
                     content.select();
+                    return false;
                 },
 
                 /**
