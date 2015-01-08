@@ -62,7 +62,17 @@ define('app.content', ['tb.core', 'content.pluginmanager'], function (Core, Plug
 
         onInit: function () {
             PluginManager.getInstance().watchContents();
+        },
+
+        onStart: function () {
+            alert("onEnable");
+        },
+
+        onStop: function () {
+            alert("onDisable");
         }
+
+
     });
 });
 
