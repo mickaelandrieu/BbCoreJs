@@ -8,21 +8,20 @@ define(['jquery', 'text!content-templates/content-action.twig', 'jsclass'], func
             jQuery(this.widget).css({
                 'position' : 'absolute',
                 'top': '-20px',
-                'right': '0px',
-                'border': '1px solid blue'
+                'right': '0px'
             });
         },
 
         setContent: function (content) {
             this.content = content;
         },
-
+        /*  listen to context */
 
         appendActions: function (actions) {
             this.cleanActions();
             var btnCtn = document.createDocumentFragment(),
                 actionInfos;
-            $.each(actions, function (i, action) {
+            $.each(actions, function (i) {
                 actionInfos = actions[i];
                 var button = jQuery("<button></button>").clone();
                 button.attr("title", actionInfos.label);

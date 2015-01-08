@@ -437,8 +437,6 @@ define(
                  */
                 onClick: function (event) {
                     event.stopPropagation();
-                    Core.Mediator.publish('on:classcontent:click', event);
-
                     var currentSelected = jQuery('.' + this.contentSelectedClass),
                         content = this.buildElement(jQuery(event.currentTarget)),
                         currentContent;
@@ -447,7 +445,7 @@ define(
                         currentContent = ContentContainer.find(currentSelected.data(this.idDataAttribute));
                         currentContent.unSelect();
                     }
-
+                    Core.Mediator.publish('on:classcontent:click', content, event);
                     ContentContainer.addContent(content);
                     content.select();
                     return false;
