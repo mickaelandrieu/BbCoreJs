@@ -26,6 +26,10 @@ define(['content.pluginmanager', 'jquery', 'jsclass'], function (PluginManager, 
                 h1.focus();
         },
 
+        canApplyOnContext: function () {
+            return true;
+        },
+
         onDisable: function () {
             this.callSuper();
         },

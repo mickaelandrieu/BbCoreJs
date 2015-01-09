@@ -1,6 +1,6 @@
 define(['content.pluginmanager', 'jquery', 'jsclass'], function (PluginManager, jQuery) {
     PluginManager.registerPlugin('contenttype', {
-        ACCEPT_CONTENT_TYPE: "Bloc/contentset_bfm",
+        ACCEPT_CONTENT_TYPE: ["Bloc/contentset_bfm", 'home/home_container'],
         onInit: function () {
             this.bindEvents();
         },
@@ -39,7 +39,6 @@ define(['content.pluginmanager', 'jquery', 'jsclass'], function (PluginManager, 
         },
 
         canApplyOnContext: function () {
-            console.log("canApplyOnContext", this.context);
             return true;
         },
 
@@ -51,7 +50,7 @@ define(['content.pluginmanager', 'jquery', 'jsclass'], function (PluginManager, 
                 context: '',
                 cmd: self.createCommand(self.addNewContent, self),
                 checkContext: function () {
-                    return self.getCurrentContentType() == self.ACCEPT_CONTENT_TYPE;
+                    return (jQuery.inArray(self.getCurrentContentType(), self.ACCEPT_CONTENT_TYPE)==-1)? false : true;
                 }
             }];
         }
