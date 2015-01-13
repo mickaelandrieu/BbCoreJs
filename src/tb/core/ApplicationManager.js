@@ -215,7 +215,6 @@ define('tb.core.ApplicationManager', ['require', 'BackBone', 'jsclass', 'jquery'
                             currentApplication.onStop();
                         }
                         AppContainer.register(applicationInfos);
-                        applicationInfos.instance.onInit();
                         applicationInfos.instance.onStart();
                         instance = applicationInfos.instance;
                     } else {
@@ -241,6 +240,7 @@ define('tb.core.ApplicationManager', ['require', 'BackBone', 'jsclass', 'jquery'
                 if (doLaunchApp) {
                     launchApplication(appname, config).done(def.resolve);
                 } else {
+
                     def.resolve.apply(arguments);
                 }
             }).fail(function () {
@@ -249,8 +249,8 @@ define('tb.core.ApplicationManager', ['require', 'BackBone', 'jsclass', 'jquery'
             return def.promise();
         },
         /**
-         * At this stage we are sure that all apps declared in applicationConfigs was loaded
-         * And that the router was loaded
+         * At this stage we are sure that all apps declared in applicationConfigs are loaded
+         * And that the router is loaded
          * We can then load the 'active' app
          */
         appsAreLoaded = function () {
