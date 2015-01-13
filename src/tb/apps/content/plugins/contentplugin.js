@@ -1,39 +1,35 @@
-
 (function () {
-
+    'use strict';
     define(['tb.core.Api'], function (Core) {
-
         return {
-
-            load: function (pluginName, req, onload, config) {
-                /*deal with namespaces here */
+            load: function (pluginName, req, onload) {
                 var namespaceInfos = Core.config('plugins:namespace'),
                     namespace = namespaceInfos.core,
                     pluginPaths = pluginName.split(':'),
-                    namespace,
+                    pname,
                     pluginInfos,
                     pluginFullPath;
-
-                if ( pluginPaths.length > 1) {
-                    namespace = namespaceInfos[pluginPaths[0]],
-                    pluginName = pluginPaths[1];
+                if (pluginPaths.length > 1) {
+                    namespace = namespaceInfos[pluginPaths[0]];
+                    pname = pluginPaths.pop();
                 } else {
-                    pluginName = pluginPaths[0];
+                    pname = pluginPaths.shift();
                 }
-                pluginFullPath = namespace+pluginName+'.plugin';
+                pluginFullPath = namespace + pluginName + '.plugin';
                 /* plugin is registered here */
-                pluginInfos = {name : pluginName, namespace : namespace, path : pluginFullPath };
+                pluginInfos = {
+                    name: pname,
+                    namespace: namespace,
+                    path: pluginFullPath
+                };
                 req([pluginFullPath], function () {
                     Core.Mediator.publish('on:pluginManager:loading', pluginInfos);
                     onload(pluginInfos);
-                }, function() {
+                }, function () {
                     Core.Mediator.publish('on:pluginManager:loadingErrors', pluginInfos);
                     onload.error(pluginInfos);
                 });
             }
-        }
-
-
+        };
     });
-
-} ());
+}());

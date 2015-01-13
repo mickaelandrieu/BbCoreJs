@@ -51,7 +51,6 @@ define('tb.core.Mediator', ['tb.core.Api'], function (Api) {
      */
     Mediator.prototype.subscribe = function mediatorSubscribe(topic, callback, context) {
         var component = new Component(callback, context);
-        console.log("context", context);
         if (!this.topics.hasOwnProperty(topic)) {
             this.topics[topic] = [];
         }

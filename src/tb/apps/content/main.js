@@ -16,31 +16,24 @@
  * You should have received a copy of the GNU General Public License
  * along with BackBuilder5. If not, see <http://www.gnu.org/licenses/>.
  */
-
 require.config({
     paths: {
-
         //Controllers
         'content.main.controller': 'src/tb/apps/content/controllers/main.controller',
-
         //Routing
         'content.routes': 'src/tb/apps/content/routes',
-
         //Repositories
         'content.repository': 'src/tb/apps/content/repository/content.repository',
-
         //Components
         'content.manager': 'src/tb/apps/content/components/ContentManager',
         'definition.manager': 'src/tb/apps/content/components/DefinitionManager',
         'content.container': 'src/tb/apps/content/components/ContentContainer',
         'content.breadcrumb': 'src/tb/apps/content/components/Breadcrumb',
         'content.pluginmanager': 'src/tb/apps/content/components/PluginManager',
-
         //Models
         'content.models.AbstractContent': 'src/tb/apps/content/models/AbstractContent',
         'content.models.Content': 'src/tb/apps/content/models/Content',
         'content.models.ContentSet': 'src/tb/apps/content/models/ContentSet',
-
         //Templates
         'content-templates': 'src/tb/apps/content/templates/',
         'content/tpl/button': 'src/tb/apps/content/templates/button.twig',
@@ -48,31 +41,28 @@ require.config({
         'content/tpl/contribution/index': 'src/tb/apps/content/templates/contribution.index.twig',
         'content/tpl/carousel_blocks': 'src/tb/apps/content/templates/carousel-blocks.twig',
         'content/tpl/palette_blocks': 'src/tb/apps/content/templates/palette-blocks.twig',
-
         //Views
         'content.view.contribution.index': 'src/tb/apps/content/views/content.view.contribution.index'
     }
 });
-
 define('app.content', ['tb.core', 'content.pluginmanager'], function (Core, PluginManager) {
-
     'use strict';
-
     Core.ApplicationManager.registerApplication("content", {
 
-        onInit: function () {
-            PluginManager.getInstance().watchContents();
+        onStart: function () {
+            this.enablePlugins();
         },
 
-        onStart: function () {
-            alert("onEnable");
+        onResume: function () {
+            this.enablePlugins();
         },
 
         onStop: function () {
-            alert("onDisable");
+            PluginManager.getInstance().disablePlugins();
+        },
+
+        enablePlugins: function () {
+            PluginManager.getInstance().enablePlugins();
         }
-
-
     });
 });
-
