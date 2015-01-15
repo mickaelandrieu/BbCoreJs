@@ -17,21 +17,24 @@
  * along with BackBuilder5. If not, see <http://www.gnu.org/licenses/>.
  */
 
-define(['tb.core'], function (bbCore) {
+define(['tb.core'], function (Core) {
     'use strict';
 
-    bbCore.ControllerManager.registerController('MainController', {
+    Core.ControllerManager.registerController('MainController', {
         appName: 'main',
         config: {
             imports: []
         },
 
-        onInit: function () {
-            console.log('on init is called');
+        indexAction: function () {
+            return;
         },
 
-        indexAction: function () {
-            console.log('main index');
+        /**
+         * Dispatch event `on:save:click``for all interested
+         */
+        saveService: function () {
+            Core.Mediator.publish('on:save:click');
         }
     });
 });
