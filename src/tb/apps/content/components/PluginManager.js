@@ -120,10 +120,7 @@ define(['tb.core', 'jquery', 'tb.core.Utils', 'tb.core.Api', 'actionContainer', 
                 return [];
             }
         }),
-<<<<<<< HEAD
 
-=======
->>>>>>> acf3006eba0b2ba557139aed71de0b43ff38a60f
         PluginManager = new JS.Class({
             initialize: function () {
                 this.pluginsInfos = pluginsInfos;
@@ -279,11 +276,7 @@ define(['tb.core', 'jquery', 'tb.core.Utils', 'tb.core.Api', 'actionContainer', 
                 this.contentActionWidget.appendActions(actions);
                 this.contentActionWidget.show();
             },
-<<<<<<< HEAD
 
-=======
-            
->>>>>>> acf3006eba0b2ba557139aed71de0b43ff38a60f
             createPluginClass: function (def) {
                 return new JS.Class(AbstractPlugin, def);
             }

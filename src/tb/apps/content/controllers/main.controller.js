@@ -1,21 +1,14 @@
 define(
     [
         'tb.core',
-<<<<<<< HEAD
         'content.dnd.manager',
         'content.mouseevent.manager',
-=======
-        'content.manager',
->>>>>>> acf3006eba0b2ba557139aed71de0b43ff38a60f
         'content.view.contribution.index',
         'definition.manager',
         'content.repository'
     ],
-<<<<<<< HEAD
     function (Core, DndManager, MouseEventManager, ContributionIndexView, DefinitionManager, ContentRepository) {
-=======
-    function (Core, ContentManager, ContributionIndexView, DefinitionManager, ContentRepository) {
->>>>>>> acf3006eba0b2ba557139aed71de0b43ff38a60f
+
 
         'use strict';
 
@@ -61,13 +54,9 @@ define(
 
             listenDOMService: function (definitions) {
                 DefinitionManager.setDefinitions(definitions);
-<<<<<<< HEAD
-
                 DndManager.listen();
                 MouseEventManager.listen();
-=======
-                ContentManager.listen();
->>>>>>> acf3006eba0b2ba557139aed71de0b43ff38a60f
+
             }
         });
     }
