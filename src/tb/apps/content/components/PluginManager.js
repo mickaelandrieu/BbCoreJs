@@ -120,7 +120,7 @@ define(['tb.core', 'jquery', 'tb.core.Utils', 'tb.core.Api', 'actionContainer', 
                 return [];
             }
         }),
-        
+
         PluginManager = new JS.Class({
             initialize: function () {
                 this.pluginsInfos = pluginsInfos;
@@ -168,12 +168,10 @@ define(['tb.core', 'jquery', 'tb.core.Utils', 'tb.core.Api', 'actionContainer', 
             },
 
             enablePlugins: function () {
-                alert("tdf");
                 var self = this,
                     context = {};
                 mediator.subscribe("on:classcontent:click", function (content) {
                     try {
-                        alert("this is it");
                         context.content = content;
                         jQuery(context.content.jQueryObject).css('position', 'relative');
                         context.scope = 'content-click';

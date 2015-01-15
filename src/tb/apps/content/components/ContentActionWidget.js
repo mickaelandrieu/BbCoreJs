@@ -4,13 +4,9 @@ define(['jquery', 'text!content/tpl/content-action', 'jsclass'], function (jQuer
         initialize: function () {
             this.content = null;
             this.widget = jQuery(template).clone();
-            jQuery(this.widget).css({
-                'position': 'absolute',
-                'top': '-20px',
-                'right': '0px'
-            });
+             jQuery(this.widget).addClass('content-actions');
         },
-        
+
         setContent: function (content) {
             this.content = content;
         },
