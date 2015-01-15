@@ -33,7 +33,7 @@ define(['tb.core'], function (Core) {
         indexAction: function () {
             console.log('main index');
         },
-        
+
         /**
          * Dispatch event `on:save:click``for all interested
          */

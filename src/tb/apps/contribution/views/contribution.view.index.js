@@ -53,7 +53,7 @@ define(
                 jQuery('ul#edit-tab li.active').removeClass('active');
                 self.addClass('active');
             },
-            
+
             /**
              * Call service `save` into main application
              */
