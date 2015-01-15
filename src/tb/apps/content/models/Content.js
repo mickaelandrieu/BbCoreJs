@@ -32,53 +32,7 @@ define(['content.models.AbstractContent', 'jsclass'], function (AbstractContent)
             config.optionsConfig = this.defaultOptionsConfig;
 
             this.callSuper(config);
-<<<<<<< HEAD
         }
-=======
-        },
-
-        /**
-         * Default options config
-         */
-        defaultOptionsConfig: [
-            {
-                icoClass: 'bb5-ico-info',
-                title: 'Informations',
-                dataType: 'bb5-ico-info',
-                label: 'Informations',
-                callbackClick: function () {
-                    console.log('click infos');
-                }
-            },
-            {
-                icoClass: 'bb5-ico-parameter',
-                title: 'Parameters',
-                dataType: 'bb5-ico-parameter',
-                label: 'Parameters',
-                callbackClick: function () {
-                    console.log('click parameters');
-                }
-            },
-            {
-                icoClass: 'bb5-ico-edit',
-                title: 'Edit',
-                dataType: 'bb5-ico-edit',
-                label: 'Edit',
-                callbackClick: function () {
-                    console.log('click edit');
-                }
-            },
-            {
-                icoClass: 'bb5-ico-del',
-                title: 'Delete',
-                dataType: 'bb5-ico-del',
-                label: 'Delete',
-                callbackClick: function () {
-                    console.log('click delete');
-                }
-            }
-        ]
->>>>>>> #3783 start DOMParser for content
     });
 
     return Content;

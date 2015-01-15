@@ -26,6 +26,10 @@ define(['tb.core'], function (Core) {
             imports: []
         },
 
+        onInit: function () {
+            return;
+        },
+
         indexAction: function () {
             return;
         },

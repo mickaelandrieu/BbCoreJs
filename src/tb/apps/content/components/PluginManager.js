@@ -167,10 +167,12 @@ define(['tb.core', 'jquery', 'tb.core.Utils', 'tb.core.Api', 'actionContainer', 
             },
 
             enablePlugins: function () {
+                alert("tdf");
                 var self = this,
                     context = {};
                 mediator.subscribe("on:classcontent:click", function (content) {
                     try {
+                        alert("this is it");
                         context.content = content;
                         jQuery(context.content.jQueryObject).css('position', 'relative');
                         context.scope = 'content-click';
@@ -275,7 +277,7 @@ define(['tb.core', 'jquery', 'tb.core.Utils', 'tb.core.Api', 'actionContainer', 
                 this.contentActionWidget.appendActions(actions);
                 this.contentActionWidget.show();
             },
-            
+
             createPluginClass: function (def) {
                 return new JS.Class(AbstractPlugin, def);
             }
