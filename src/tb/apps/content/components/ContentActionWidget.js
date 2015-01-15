@@ -1,4 +1,4 @@
-define(['jquery', 'text!content-templates/content-action.twig', 'jsclass'], function (jQuery, template) {
+define(['jquery', 'text!content/tpl/content-action', 'jsclass'], function (jQuery, template) {
     'use strict';
     var ContentActionWidget = new JS.Class({
         initialize: function () {
@@ -10,9 +10,11 @@ define(['jquery', 'text!content-templates/content-action.twig', 'jsclass'], func
                 'right': '0px'
             });
         },
+        
         setContent: function (content) {
             this.content = content;
         },
+
         /*  listen to context */
         appendActions: function (actions) {
             this.cleanActions();
@@ -32,17 +34,21 @@ define(['jquery', 'text!content-templates/content-action.twig', 'jsclass'], func
             });
             this.widget.append(btnCtn);
         },
+
         cleanActions: function () {
             //jQuery(this.content).find(this.widget).remove();
             this.widget.empty();
         },
+
         showOn: function (content) {
             content = content || this.content;
             jQuery(content).append(this.widget);
         },
+
         show: function () {
             jQuery(this.content).append(this.widget);
         },
+
         hide: function () {
             this.widget.empty();
         }

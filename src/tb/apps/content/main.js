@@ -36,6 +36,7 @@ require.config({
         'definition.manager': 'src/tb/apps/content/components/DefinitionManager',
         'content.container': 'src/tb/apps/content/components/ContentContainer',
         'content.breadcrumb': 'src/tb/apps/content/components/Breadcrumb',
+        'content.pluginmanager': 'src/tb/apps/content/components/PluginManager',
 
         //Models
         'content.models.AbstractContent': 'src/tb/apps/content/models/AbstractContent',
@@ -49,20 +50,20 @@ require.config({
         'content/tpl/carousel_blocks': 'src/tb/apps/content/templates/carousel-blocks.twig',
         'content/tpl/palette_blocks': 'src/tb/apps/content/templates/palette-blocks.twig',
         'content/tpl/dropzone': 'src/tb/apps/content/templates/dropzone.twig',
+        'content/tpl/content-action': 'src/tb/apps/content/templates/content-action.twig',
 
         //Views
         'content.view.contribution.index': 'src/tb/apps/content/views/content.view.contribution.index'
     }
 });
 
-define("app.content", ["tb.core"], function (Core) {
+define("app.content", ['tb.core', 'content.pluginmanager'], function (Core, PluginManager) {
 
     'use strict';
 
-    Core.ApplicationManager.registerApplication("content", {
+    Core.ApplicationManager.registerApplication('content', {
 
         onStart: function () {
-            alert("radical blaze");
             this.enablePlugins();
         },
 

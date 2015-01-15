@@ -120,6 +120,7 @@ define(['tb.core', 'jquery', 'tb.core.Utils', 'tb.core.Api', 'actionContainer', 
                 return [];
             }
         }),
+        
         PluginManager = new JS.Class({
             initialize: function () {
                 this.pluginsInfos = pluginsInfos;
