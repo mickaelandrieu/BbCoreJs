@@ -74,4 +74,8 @@ define(['jsclass'], function () {
     });
 
     return new JS.Singleton(DefinitionManager);
+<<<<<<< HEAD
 });
+=======
+});
+>>>>>>> acf3006eba0b2ba557139aed71de0b43ff38a60f
