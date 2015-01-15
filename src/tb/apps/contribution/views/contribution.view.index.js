@@ -31,11 +31,8 @@ define(
              * Events of view
              */
             bindUiEvents: function () {
-                var element = jQuery(this.el);
-
-                element.on('click', 'ul#edit-tab li', this.manageMenu);
-                element.on('click', '#new-page', this.showNewPage);
-                element.on('click', '#global-save', this.manageSave);
+                jQuery(this.el).on('click', 'ul#edit-tab li', this.manageMenu);
+                jQuery(this.el).on('click', '#new-page', this.showNewPage);
             },
 
             showNewPage: function () {
@@ -54,13 +51,6 @@ define(
                 var self = jQuery(event.currentTarget);
                 jQuery('ul#edit-tab li.active').removeClass('active');
                 self.addClass('active');
-            },
-
-            /**
-             * Call service `save` into main application
-             */
-            manageSave: function () {
-                ApplicationManager.invokeService('main.main.save');
             },
 
             /**

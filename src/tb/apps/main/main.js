@@ -19,7 +19,7 @@
 require.config({
     paths: {
         'main.routes': 'src/tb/apps/main/routes',
-        'main.main.controller': 'src/tb/apps/main/controllers/main.controller',
+        'main.controller': 'src/tb/apps/main/controllers/main.controller',
 
         //Templates
         'main/tpl/toolbar': 'src/tb/apps/main/templates/toolbar.twig',
