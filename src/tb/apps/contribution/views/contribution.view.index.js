@@ -32,7 +32,7 @@ define(
              */
             bindUiEvents: function () {
                 var element = jQuery(this.el);
-                
+
                 element.on('click', 'ul#edit-tab li', this.manageMenu);
                 element.on('click', '#new-page', this.showNewPage);
                 element.on('click', '#global-save', this.manageSave);
