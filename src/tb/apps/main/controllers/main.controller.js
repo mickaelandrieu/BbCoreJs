@@ -26,12 +26,8 @@ define(['tb.core'], function (Core) {
             imports: []
         },
 
-        onInit: function () {
-            console.log('on init is called');
-        },
-
         indexAction: function () {
-            console.log('main index');
+            return;
         },
 
         /**
