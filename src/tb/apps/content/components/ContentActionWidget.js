@@ -4,13 +4,12 @@ define(['jquery', 'text!content/tpl/content-action', 'jsclass'], function (jQuer
         initialize: function () {
             this.content = null;
             this.widget = jQuery(template).clone();
-             jQuery(this.widget).addClass('content-actions');
+            jQuery(this.widget).addClass('content-actions');
         },
 
         setContent: function (content) {
             this.content = content;
         },
-
 
         /*  listen to context */
         appendActions: function (actions) {
@@ -40,7 +39,7 @@ define(['jquery', 'text!content/tpl/content-action', 'jsclass'], function (jQuer
         show: function () {
             jQuery(this.content).append(this.widget);
         },
-
+        
         hide: function () {
             this.widget.empty();
         }
