@@ -39,6 +39,13 @@ define(
             saveService: function () {
                 SaveManager.save();
             },
+            
+            /**
+             * Call method save into SaveManager
+             */
+            cancelService: function () {
+                SaveManager.cancel();
+            },
 
             contributionIndexAction: function () {
                 var self = this;

@@ -81,6 +81,11 @@ define('app.main', ['tb.core', 'tb.core.ApplicationManager', 'main.view.index', 
             Core.Mediator.subscribe('on:save:click', function () {
                 ApplicationManager.invokeService('content.main.save');
             });
+            
+            // Listen event cancel
+            Core.Mediator.subscribe('on:cancel:click', function () {
+                ApplicationManager.invokeService('content.main.cancel');
+            });
 
             var view = new MainViewIndex(this.config);
             view.render();

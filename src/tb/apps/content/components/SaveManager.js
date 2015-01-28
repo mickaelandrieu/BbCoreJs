@@ -47,6 +47,10 @@ define(
                     }
                 }
             },
+            
+            cancel: function () {
+                //Call for delete revision and reload the page
+            },
 
             /**
              * Update elements and parameters
