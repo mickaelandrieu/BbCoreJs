@@ -19,6 +19,7 @@
 module.exports = function (grunt) {
     'use strict';
 
+    var path = (grunt.option('path') !== undefined) ? grunt.option('path') : undefined;
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
@@ -168,7 +169,7 @@ module.exports = function (grunt) {
             test: {
                 src: ['<%= dir.src %>/core/**/*.js', '<%= dir.src %>/component/**/*.js'],
                 options: {
-                    specs: '<%= dir.specs %>/**/*.spec.js',
+                    specs: path || '<%= dir.specs %>/**/*.spec.js',
                     helpers: '<%= dir.specs %>/**/*.helper.js',
                     template: require('grunt-template-jasmine-requirejs'),
                     templateOptions: {
@@ -181,7 +182,7 @@ module.exports = function (grunt) {
             coverage: {
                 src: '<%= jasmine.test.src %>',
                 options: {
-                    specs: '<%= jasmine.test.options.specs %>',
+                    specs: path || '<%= dir.specs %>/**/*.spec.js',
                     template: require('grunt-template-jasmine-istanbul'),
                     templateOptions: {
                         coverage: 'coverage/json/coverage.json',

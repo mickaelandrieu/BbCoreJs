@@ -19,7 +19,6 @@
 require.config({
     baseUrl: 'resources/toolbar/',
     catchError: true,
-    urlArgs: 'cb=' + Math.random(),
     paths: {
         'tb.core': 'src/tb/main',
         'component': 'src/tb/component/component',

@@ -19,5 +19,8 @@
     "jsclass": "4.0.5",
     "grunt-lesslint": "~1.1.13",
     "grunt-contrib-less": "~0.12.0"
+  },
+  "dependencies": {
+    "fb-flo": "^0.4.0"
   }
 }
