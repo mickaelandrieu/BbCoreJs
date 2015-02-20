@@ -143,6 +143,10 @@ define([], function () {
                 edition: {
                     accept: ['*'],
                     config: {}
+                },
+                dnd: {
+                    accept: ['*'],
+                    config: {}
                 }
             },
             "demo": {}

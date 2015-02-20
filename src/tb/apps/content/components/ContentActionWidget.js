@@ -38,10 +38,12 @@ define(['jquery', 'text!content/tpl/content-action', 'jsclass'], function (jQuer
                 btnCtn = document.createDocumentFragment();
             jQuery.each(actions, function (i) {
                 actionInfos = actions[i];
+                
                 var button = jQuery("<button></button>").clone();
                 button.attr("title", actionInfos.label);
+                button.attr('draggable', 'true');
                 button.addClass(actionInfos.ico);
-                jQuery(button).on("click", actionInfos.cmd.execute);
+                //jQuery(button).on("click", actionInfos.cmd.execute);
                 btnCtn.appendChild(jQuery(button).get(0));
             });
             return btnCtn;

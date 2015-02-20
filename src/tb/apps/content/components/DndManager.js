@@ -74,7 +74,7 @@ define(
                         children,
                         firstChild,
                         div = Renderer.render(dropZoneTemplate, {'class': this.dropZoneClass});
-
+                    
                     for (key in contentSets) {
                         if (contentSets.hasOwnProperty(key)) {
                             contentSet = contentSets[key];
@@ -192,9 +192,9 @@ define(
                         oldParent = content.jQueryObject.parents('.' + this.contentClass + ':first');
 
                         if (oldParent.data(this.idDataAttribute)) {
-                            oldParentAsContent = ContentContainer.find(parent.data(this.idDataAttribute));
+                            oldParentAsContent = ContentContainer.find(oldParent.data(this.idDataAttribute));
                         } else {
-                            oldParentAsContent = ContentManager.buildElement(parent);
+                            oldParentAsContent = ContentManager.buildElement(oldParent);
                         }
                         oldParentAsContent.setUpdated(true);
 
@@ -210,30 +210,36 @@ define(
                  */
                 onDragStart: function (event) {
                     event.stopPropagation();
-
-                    var target = jQuery(event.target),
-                        identifier = target.data(this.identifierDataAttribute),
+                    
+                    var target = jQuery(event.currentTarget),
+                        identifier,
                         content,
                         id,
                         img,
                         type;
 
+                    if (target.hasClass('btn-dnd')) {
+                        identifier = target.parents('.' + this.contentClass + ':first').data(this.identifierDataAttribute);
+                    } else {
+                        identifier = target.data(this.identifierDataAttribute);
+                    }
+                    
                     event.dataTransfer.effectAllowed = 'move';
 
-                    if (identifier) {
+                    if (identifier !== undefined) {
 
                         dataTransfer.onDrop = this.doDropContent;
 
                         content = ContentManager.buildElement(ContentManager.retrievalObjectIdentifier(identifier));
                         ContentContainer.addContent(content);
-
+                        
                         type = content.type;
                         id = content.id;
                         dataTransfer.id = id;
 
                         img = document.createElement('img');
                         img.src = content.definition.image;
-
+                        
                         event.dataTransfer.setDragImage(img, 50, 50);
                     } else {
                         if (target.data(this.typeDataAttribute)) {
