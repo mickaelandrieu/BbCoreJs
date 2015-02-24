@@ -23,12 +23,14 @@ define(
         'jquery',
         'content.container',
         'content.manager',
+        'content.widget.Breadcrumb',
         'jsclass'
     ],
     function (Core,
               jQuery,
               ContentContainer,
-              ContentManager
+              ContentManager,
+              Breadcrumb
             ) {
 
         'use strict';
@@ -37,9 +39,9 @@ define(
 
             contentClass: 'bb-content',
             contentHoverClass: 'bb-content-hover',
-            contentSelectedClass: 'bb-content-selected',
             identifierDataAttribute: 'bb-identifier',
             idDataAttribute: 'bb-id',
+            breadCrumbSelector: 'div.bb5-content-breadcrumb div.bb5-ui-width-setter',
 
             /**
              * listen the DOM
@@ -66,18 +68,15 @@ define(
              * @returns {Boolean}
              */
             onClick: function (event) {
-                var currentSelected = jQuery('.' + this.contentSelectedClass),
-                    currentTarget = jQuery(event.currentTarget),
+                var currentTarget = jQuery(event.currentTarget),
                     identifier = currentTarget.data(this.identifierDataAttribute),
-                    content = ContentManager.buildElement(ContentManager.retrievalObjectIdentifier(identifier)),
-                    currentContent;
+                    content = ContentManager.buildElement(ContentManager.retrievalObjectIdentifier(identifier));
 
                 if (ContentManager.isUsable(content.type)) {
 
-                    if (currentSelected.length > 0) {
-                        currentContent = ContentContainer.find(currentSelected.data(this.idDataAttribute));
-                        currentContent.unSelect();
-                    }
+                    ContentManager.unSelectContent();
+
+                    Breadcrumb.show(content, this.breadCrumbSelector);
 
                     if (content.jQueryObject.length === 0) {
                         content.jQueryObject = currentTarget;

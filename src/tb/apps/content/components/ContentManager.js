@@ -47,6 +47,7 @@ define(
             dropZoneAttribute: '*[dropzone="true"]',
             imageClass: 'Element/Image',
             defaultPicturePath: '/resources/toolbar/html/img/filedrop.png',
+            contentSelectedClass: 'bb-content-selected',
 
             /**
              * Search all contentset with dragzone="true" attribute
@@ -206,6 +207,16 @@ define(
                         image.attr('src', self.defaultPicturePath);
                     }
                 });
+            },
+
+            unSelectContent: function () {
+                var currentSelected = jQuery('.' + this.contentSelectedClass),
+                    currentContent;
+
+                if (currentSelected.length > 0) {
+                    currentContent = ContentContainer.find(currentSelected.data(this.idDataAttribute));
+                    currentContent.unSelect();
+                }
             },
 
             /**

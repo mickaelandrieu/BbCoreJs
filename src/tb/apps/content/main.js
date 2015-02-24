@@ -41,6 +41,7 @@ require.config({
 
         //Widgets
         'content.widget.DialogContentsList': 'src/tb/apps/content/widgets/DialogContentsList',
+        'content.widget.Breadcrumb': 'src/tb/apps/content/widgets/Breadcrumb',
 
         //Models
         'content.models.AbstractContent': 'src/tb/apps/content/models/AbstractContent',
@@ -56,6 +57,7 @@ require.config({
         'content/tpl/palette_blocks': 'src/tb/apps/content/templates/palette-blocks.twig',
         'content/tpl/dropzone': 'src/tb/apps/content/templates/dropzone.twig',
         'content/tpl/content-action': 'src/tb/apps/content/templates/content-action.twig',
+        'content/tpl/breadcrumb': 'src/tb/apps/content/templates/breadcrumb.twig',
 
         //Views
         'content.view.contribution.index': 'src/tb/apps/content/views/content.view.contribution.index'
