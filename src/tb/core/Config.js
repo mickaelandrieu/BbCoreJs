@@ -40,10 +40,11 @@ define('tb.core.Config', ['require', 'tb.core.Api'], function (require) {
             var key;
 
             for (key in obj) {
-                if (obj.hasOwnProperty(key) && ('object' === typeof obj[key])) {
+                if (obj.hasOwnProperty(key) && ('object' === typeof obj[key]) && obj[key] !== null) {
                     setImutable(obj[key]);
                 }
             }
+
             Object.freeze(obj);
         },
 
@@ -54,6 +55,7 @@ define('tb.core.Config', ['require', 'tb.core.Api'], function (require) {
             }
 
             container = config;
+
             setImutable(container);
         },
 
