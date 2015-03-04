@@ -84,14 +84,8 @@ define(
             /**
              * Show tree with pages
              */
-            treeAction: function () {
-                var config = {
-                        do_loading: true,
-                        do_pagination: true,
-                        site_uid: Core.get('site.uid'),
-                        popin: true
-                    },
-                    view = new PageTreeViewContribution(config);
+            treeService: function (config) {
+                var view = new PageTreeViewContribution(config);
 
                 view.render();
             },

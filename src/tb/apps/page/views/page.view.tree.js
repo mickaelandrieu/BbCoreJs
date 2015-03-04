@@ -34,6 +34,8 @@ define(
          */
         var PageViewTree = Backbone.View.extend({
 
+            limit_of_page: 10,
+
             /**
              * Initialize of PageViewClone
              */
@@ -100,7 +102,7 @@ define(
 
                 if (event.node.is_fake === true && self.config.do_pagination === true) {
 
-                    self.findPages(parent.id, event, parent.range_to).done(function (data) {
+                    self.findPages(parent.id, event, parent.range_to + 1).done(function (data) {
                         self.treeView.invoke('removeNode', event.node);
                         self.insertDataInNode(data, parent);
                     });
@@ -119,7 +121,7 @@ define(
                 }
 
                 if (event.node.before_load) {
-                    self.findPages(event.node.id, event).done(function (data) {
+                    self.findPages(event.node.id, event, 0).done(function (data) {
                         self.insertDataInNode(data, event.node);
                     });
                 }
@@ -132,11 +134,11 @@ define(
              * @param {Number} start
              * @param {Number} limit
              */
-            findPages: function (parent_uid, event, start, limit) {
+            findPages: function (parent_uid, event, start) {
                 var dfd = jQuery.Deferred(),
                     self = this;
 
-                PageRepository.findChildren(parent_uid, start, limit).done(function (data, response) {
+                PageRepository.findChildren(parent_uid, start, this.limit_of_page).done(function (data, response) {
 
                     self.updateLimit(event, response);
 
@@ -228,7 +230,8 @@ define(
              * @param {Object} node
              */
             insertDataInNode: function (data, node) {
-                var key;
+                var key,
+                    children = node.children;
 
                 if (node.before_load) {
                     if (node.children.hasOwnProperty(0) && node.children[0].is_fake === true) {
@@ -243,7 +246,7 @@ define(
                     }
                 }
 
-                if (node.range_total > node.range_to && this.config.do_pagination === true) {
+                if (node.range_total > children.length  && this.config.do_pagination === true) {
                     this.treeView.invoke('appendNode', this.buildNode('next results...', {'is_fake': true}), node);
                 }
             },

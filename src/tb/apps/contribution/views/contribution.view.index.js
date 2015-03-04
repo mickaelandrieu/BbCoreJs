@@ -35,8 +35,20 @@ define(
                 element.on('click', 'ul#edit-tab li', this.manageMenu);
                 element.on('click', '#new-page', this.showNewPage);
                 element.on('click', '#global-save', this.manageSave);
+                element.on('click', '#bundle-toolbar-tree', this.showTree);
                 element.on('click', '#bundle-toolbar-global-validate', this.manageValidate);
                 element.on('click', '#bundle-toolbar-global-cancel', this.manageCancel);
+            },
+
+            showTree: function () {
+                var config = {
+                        do_loading: true,
+                        do_pagination: true,
+                        site_uid: Core.get('site.uid'),
+                        popin: true
+                    };
+
+                ApplicationManager.invokeService('page.main.tree', config);
             },
 
             showNewPage: function () {
