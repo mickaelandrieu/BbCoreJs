@@ -881,10 +881,18 @@ Version: 2.10 Dec2014
         margin-bottom:6px;
     }
 
-    .tab-pane input[type=radio],
-    .tab-pane input[type=checkbox] {
-        margin:0;
+    
+    .tab-pane {
+        .radio-inline, .checkbox-inline {
+            padding-left: 15px;
+        }
+        input[type=radio],
+        input[type=checkbox] {
+            margin-top:1px;
+            margin-left:-15px;
+        }
     }
+    
 
     /*PREVIEW*/
     .bb5-content-preview {
