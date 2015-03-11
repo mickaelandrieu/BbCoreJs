@@ -2436,6 +2436,21 @@ Version: 2.10 Dec2014
     }
 }
 
+.bb-dropzone {
+    @size : 50px;
+    color: lighten(@bb5-txt-clr,25%);
+    #bb5-ui .alert;
+    width: 100%;
+    text-align: center;
+    padding:1em;
+    height: 100px;
+    border: 2px dashed darken(@brand-success,10%);
+    position:relative;
+    &:before {
+        content:"\f0ed"; text-align: center; font-size: @size!important; #bb5-ui .fa; position:absolute; top:50%; left:50%; width: @size; height: @size; margin: @size/-3 0 0 @size/-2;
+    }
+}
+
 .bb5-content-hover {
     .box-shadow(0px 0px 1px 3px rgba(0,0,0,0.2))
 }
