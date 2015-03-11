@@ -9,8 +9,8 @@
     </p>
     <p>Date de création: <strong>01/10/2013</strong></p>
     <p>
-        <button class="bb5-button move-up {% if loop.first %}hidden{% endif %} {{ element.getKey() }}_move"><i class="fa fa-arrow-up"></i></button>
-        <button class="bb5-button move-down {% if loop.last %}hidden{% endif %} {{ element.getKey() }}_move"><i class="fa fa-arrow-down"></i></button>
-        <button id="{{ element.getKey() }}_trash" class="bb5-button"><i class="fa fa-trash"></i></button>
+        <button class="btn btn-default-grey btn-sm fa fa-angle-up move-up {% if loop.first %}hidden{% endif %} {{ element.getKey() }}_move"></button>
+        <button class="btn btn-default-grey btn-sm fa fa-angle-down move-down {% if loop.last %}hidden{% endif %} {{ element.getKey() }}_move"></button>
+        <button id="{{ element.getKey() }}_trash" class="btn btn-default-grey btn-sm fa fa-trash"></button>
     </p>
 </li>

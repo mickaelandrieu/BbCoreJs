@@ -4,6 +4,7 @@
 
     "activate": "Activate",
     "activate_deactivate": "Activate / Deactivate",
+    "add_content": "Add content",
     "all": "All",
     "apply_to_all_selected_pages": "Apply to all selected pages",
     "author": "Author",
@@ -12,6 +13,7 @@
     "block": "Block",
 
     "cancel": "Cancel",
+    "clear_all": "Clear all",
     "content_management": "Content management",
     "contribution": "Contribution",
     "contents": "Contents",
@@ -79,6 +81,7 @@
     "save": "Save",
     "scheduling": "Scheduling",
     "search": "Search",
+    "search_content": "Search content",
     "see_my_extensions": "See my extensions",
     "select": "Select",
     "status": "Status",

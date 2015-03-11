@@ -4,9 +4,9 @@
 
     <div class="bb5-listContainer">
         <p>
-            <button id="{{ element.getKey() }}_addcontent" class="bb5-button"><i class="fa fa-plus"></i> Add content</button>
-            <button id="{{ element.getKey() }}_searchcontent" class="bb5-button"><i class="fa fa-search-plus"></i> Search content</button>
-            <button id="{{ element.getKey() }}_trashall" class="bb5-button"><i class="fa fa-trash"></i> Clear all</button>
+            <button id="{{ element.getKey() }}_addcontent" class="btn btn-default-grey btn-sm"><i class="fa fa-plus"></i> {{ trans('add_content') }}</button>
+            <button id="{{ element.getKey() }}_searchcontent" class="btn btn-default-grey btn-sm"><i class="fa fa-search-plus"></i> {{ trans('search_content') }}</button>
+            <button id="{{ element.getKey() }}_trashall" class="btn btn-default-grey btn-sm"><i class="fa fa-trash"></i> {{ trans('clear_all') }}</button>
         </p>
         <ul id="{{ element.getKey() }}_list" class="bb5-list-media bb5-list-media-is-list clearfix">
             {% for item in items %}
