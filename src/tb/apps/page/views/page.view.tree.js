@@ -78,9 +78,17 @@ define(
              * @param {Object} li
              */
             onCreateLi: function (node, li) {
+
                 var title = li.find('.jqtree-title');
-                if (node.state === 0 || node.state === 2) {
-                    title.css('color', 'red');
+
+                if (node.is_fake !== true) {
+                    if (node.state === 0 || node.state === 2) {
+                        title.html('<i class="bb5-ico-workflow offline"></i>' + title.html());
+                    } else if (node.state === 3) {
+                        title.html('<i class="bb5-ico-workflow masked"></i>' + title.html());
+                    } else {
+                        title.html('<i class="bb5-ico-workflow"></i>' + title.html());
+                    }
                 }
             },
 
