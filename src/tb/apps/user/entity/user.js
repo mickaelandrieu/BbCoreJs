@@ -70,7 +70,7 @@ define(['tb.core.Utils', 'cryptojs.md5', 'jsclass'], function (Utils, CryptoJS) 
         },
 
         activated: function () {
-            return (this.data.activated !== undefined && this.data.activated !== false) ? 'active' : 'inactive';
+            return (this.data.activated !== undefined && this.data.activated !== false) ? true : false;
         },
 
         picture: function () {

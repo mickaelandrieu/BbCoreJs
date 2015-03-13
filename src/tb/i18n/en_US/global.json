@@ -3,6 +3,7 @@
     "app_only_default": "Only default",
 
     "activate": "Activate",
+    "activated": "Activated",
     "activate_deactivate": "Activate / Deactivate",
     "add_content": "Add content",
     "all": "All",
@@ -13,6 +14,7 @@
     "block": "Block",
 
     "cancel": "Cancel",
+    "change_password": "Change password ?",
     "clear_all": "Clear all",
     "content_management": "Content management",
     "contribution": "Contribution",
@@ -25,6 +27,7 @@
 
     "data_base": "Data base",
     "deactivate": "Deactivate",
+    "deactivated": "Deactivated",
     "delete": "Delete",
     "display": "Display",
     "display_external_content": "Display external content",
@@ -40,6 +43,7 @@
     "external_link": "External link",
 
     "filters": "Filters",
+    "first_name": "First name",
     "find_users": "Find users",
 
     "gabarit": "Template",
@@ -50,7 +54,9 @@
     "import": "Import",
     "internal_link": "Internal link",
 
+    "last_name": "Nom de famille",
     "link_selector_label": "Link Selector",
+    "login": "Login",
     "loading": "Loading",
 
     "manage": "Manage",
@@ -58,6 +64,7 @@
     "media_library": "Media library",
     "modified_date": "Modified date",
 
+    "name": "Name",
     "new_page": "New page",
     "next": "Next",
     "no_one": "No one",
@@ -69,6 +76,7 @@
     "page_seo": "Page SEO",
     "page_status": "Page status",
     "page_tree": "Page tree",
+    "password": "Password",
     "previous": "Previous",
     "publishing_archiving": "Publishing / Archiving",
 
@@ -87,6 +95,7 @@
     "select": "Select",
     "show_folder": "Show folder",
     "status": "Status",
+    "submit": "Submit",
 
     "theme": "Theme",
     "title": "Title",
