@@ -22,7 +22,13 @@
                         <a href="#" class="btn btn-default btn-sm fa fa-angle-left">
                             <span class="sr-only">{{ 'previous'|trans }}</span>
                         </a>
-                        <span class="bb5-button-selector-status">{{ user.activated() }}</span>
+                        <span class="bb5-button-selector-status">
+                            {% if user.activated %}
+                                {{ 'activated'|trans }}
+                            {% else %}
+                                {{ 'deactivated'|trans }}
+                            {% endif %}
+                        </span>
                         <a href="#" class="btn btn-default btn-sm fa fa-angle-right">
                             <span class="sr-only">{{ 'next'|trans }}</span>
                         </a>

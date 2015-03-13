@@ -2,6 +2,7 @@
     "app_validate": "Valider",
 
     "activate": "Activer",
+    "activated": "Activé",
     "activate_deactivate": "Activer / Désactiver",
     "add_content": "Ajout d'un contenu",
     "all": "Tous",
@@ -12,6 +13,7 @@
     "block": "Bloc",
 
     "cancel": "Annuler",
+    "change_password": "Changer de mot de passe ?",
     "clear_all": "Tout supprimer",
     "content_management": "Gestion de contenus",
     "contribution": "Contribution",
@@ -22,6 +24,7 @@
 
     "data_base": "Base de données",
     "deactivate": "Désactiver",
+    "deactivated": "Désactivé",
     "delete": "Supprimer",
     "display": "Affichage",
     "display_external_content": "Affichage de contenu externe",
@@ -36,6 +39,7 @@
     "extensions": "Extensions",
 
     "filters": "Filtres",
+    "first_name": "Prénom",
     "find_users": "Rechercher des utilisateurs",
 
     "gabarit": "Gabarit",
@@ -45,6 +49,8 @@
 
     "import": "Importer",
 
+    "last_name": "Nom de famille",
+    "login": "Pseudo",
     "loading": "Chargement",
 
     "manage": "Administrer",
@@ -53,6 +59,7 @@
     "media": "Média",
     "media_library": "Médiathèque",
 
+    "name": "Nom",
     "new_page": "Nouvelle page",
     "next": "Suivant",
     "no_one": "Aucun",
@@ -64,17 +71,19 @@
     "page_seo": "Page SEO",
     "page_status": "Status de la page",
     "page_tree": "Arborescence de page",
+    "password": "Mot de passe",
     "previous": "Précédent",
     "publishing_archiving": "Publication / Archivage",
 
     "remove_group_confirmation_message": "Êtes-vous sur de vouloir supprimer le groupe",
     "remove_user_confirmation_message": "Êtes-vous sur de vouloir supprimer l'utilisateur",
-    "rename": "Renomer",
+    "rename": "Renommer",
     "restore": "Restaurer",
     "rights_management": "Gestion des droits",
     "roles_management": "Gestion des rôles",
 
     "save": "Sauvegarder",
+    "submit": "Valider",
     "scheduling": "Planification",
     "search": "Rechercher",
     "search_content": "Rechercher un contenu",
@@ -96,5 +105,5 @@
 
     "website_parameters": "Paramètres du site",
     "workflow_management": "Gestion du workflow",
-    "write_and_acces": "doits/accés"
+    "write_and_acces": "Droits/accès"
 }

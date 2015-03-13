@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with BackBuilder5. If not, see <http://www.gnu.org/licenses/>.
  */
-define(['component!formbuilder'], function (formbuilder) {
+define(['component!formbuilder', 'component!translator'], function (formbuilder, Translator) {
     'use strict';
 
     var configure = function (view) {
@@ -25,13 +25,13 @@ define(['component!formbuilder'], function (formbuilder) {
             elements: {
                 firstname: {
                     type: 'text',
-                    label: 'firstname',
+                    label: 'first_name',
                     placeholder: 'John',
                     value: view.user.getObject().firstname
                 },
                 lastname: {
                     type: 'text',
-                    label: 'lastname',
+                    label: 'last_name',
                     placeholder: 'Doe',
                     value: view.user.getObject().lastname
                 },
@@ -57,7 +57,7 @@ define(['component!formbuilder'], function (formbuilder) {
                 changepwd: {
                     type: 'checkbox',
                     options: {
-                        yes: 'change password'
+                        yes: 'change_password'
                     }
                 },
                 passwd: {
