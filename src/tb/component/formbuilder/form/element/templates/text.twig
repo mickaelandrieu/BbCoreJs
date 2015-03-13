@@ -1,9 +1,9 @@
-<label for="">{{ element.getLabel() }}</label>
+<label for="">{{ element.getLabel()|trans }}</label>
 <input type="text"
        name="{{ element.getKey() }}"
        {% if element.isDisabled() %}disabled{% endif %}
        value="{{ element.getValue() }}"
-       placeholder="{{ element.getPlaceholder() }}"
+       placeholder="{{ element.getPlaceholder()|trans }}"
        class="form-control"
        >
 {% if element.getError() != null %}

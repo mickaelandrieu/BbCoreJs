@@ -102,7 +102,7 @@ define('tb.component/formbuilder/form/Form', ['tb.core.Api', 'underscore', 'Back
                 this.action = config.action;
             }
 
-            this.submitLabel = 'Submit';
+            this.submitLabel = 'submit';
             if (config.hasOwnProperty('submitLabel')) {
                 this.submitLabel = config.submitLabel;
             }
