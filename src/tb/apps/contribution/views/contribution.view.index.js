@@ -41,14 +41,18 @@ define(
             },
 
             showTree: function () {
+                var popinId = 'bb-page-tree',
                 var config = {
                         do_loading: true,
                         do_pagination: true,
                         site_uid: Core.get('site.uid'),
                         popin: true
                     };
-
-                Core.ApplicationManager.invokeService('page.main.tree', config);
+                if (document.getElementById(popinId) !== null) {
+                    jQuery('#' + popinId).dialog('open');
+                } else {
+                    Core.ApplicationManager.invokeService('page.main.tree', config);
+                }
             },
 
             showNewPage: function () {

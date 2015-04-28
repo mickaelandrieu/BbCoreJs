@@ -14,6 +14,7 @@ define(['jquery', 'tb.component/treeview/NodeEditor', "BackBone", "lib.jqtree", 
          * TreeView class constructor
          */
         initialize: function (userOptions) {
+
             this.useWrapper = false;
             this.isloaded = false;
             var uid = Math.random().toString(36).substr(2, 9);

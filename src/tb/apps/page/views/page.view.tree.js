@@ -57,7 +57,8 @@ define(
                 var config = {
                         dragAndDrop: true,
                         onCreateLi: this.onCreateLi,
-                        autoOpen: 0
+                        autoOpen: 0,
+                        id: 'bb-page-tree'
                     };
 
                 this.formatedData = [];
